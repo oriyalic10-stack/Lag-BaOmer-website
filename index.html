@@ -892,28 +892,6 @@
   .faq-overlay-head h2{ font-family:'Suez One', serif; font-weight:400; font-size:26px; color:var(--ember-text); }
   .faq-overlay-head p{ color:var(--text-muted); font-size:14.5px; margin:10px auto 0; max-width:420px; }
 
-  .role-picker{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding:6px 0 28px; }
-  .role-btn{
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    background:var(--panel-2); border:1px solid var(--line); border-radius:18px;
-    padding:20px 28px; min-width:140px; cursor:pointer;
-    font-family:'Heebo', sans-serif; font-weight:700; font-size:15.5px; color:var(--text-main);
-    transition:border-color .15s ease, background .15s ease, transform .15s ease;
-  }
-  .role-btn:hover{ border-color:var(--ember); background:rgba(223,106,48,0.10); transform:translateY(-2px); }
-  .role-btn .emoji{ font-size:28px; }
-
-  .role-bar{ display:none; align-items:center; justify-content:center; gap:10px; padding:0 0 20px; }
-  .role-bar.show{ display:flex; }
-  .role-bar span{ color:var(--text-muted); font-size:14px; }
-  .role-bar strong{ color:var(--text-main); }
-  .role-switch-btn{
-    background:var(--panel); border:1px solid var(--line); color:var(--gold);
-    font-weight:600; font-size:13px; padding:7px 14px; border-radius:999px;
-    cursor:pointer; font-family:'Heebo', sans-serif;
-  }
-  .role-switch-btn:hover{ border-color:var(--gold); }
-
   .faq-extra-main{ display:none; }
   .faq-extra-main.show{ display:block; }
   .faq-cat{ padding:22px 0; border-bottom:1px solid var(--line); }
@@ -1481,26 +1459,10 @@
 
       <div class="faq-overlay-head">
         <h2>שאלות נפוצות נוספות</h2>
-        <p>ריכזנו כאן עוד שאלות, מותאמות בנפרד להורים ולילדים. תבחרו מי אתם, ותראו את השאלות הרלוונטיות לכם.</p>
+        <p>ריכזנו כאן עוד שאלות שעולות לקראת האירוע.</p>
       </div>
 
-      <div class="role-picker" id="faq-role-picker">
-        <button type="button" class="role-btn" data-role="parent">
-          <span class="emoji" aria-hidden="true">👪</span>
-          אני הורה
-        </button>
-        <button type="button" class="role-btn" data-role="kid">
-          <span class="emoji" aria-hidden="true">🧒</span>
-          אני ילד/ה
-        </button>
-      </div>
-
-      <div class="role-bar" id="faq-role-bar">
-        <span>מציג שאלות עבור: <strong id="faq-role-bar-label"></strong></span>
-        <button type="button" class="role-switch-btn" id="faq-role-switch-btn">להחליף</button>
-      </div>
-
-      <div class="faq-extra-main" id="faq-extra-main">
+      <div class="faq-extra-main show" id="faq-extra-main">
         <div id="faq-extra-sections"></div>
         <div class="contact-box" style="padding-top:26px; border-top:1px solid var(--line); margin-top:6px;">
           <p>יש לכם שאלה נוספת שלא מצאה כאן מענה? נשמח שתפנו אלינו.</p>
@@ -1926,67 +1888,52 @@
     var overlay = document.getElementById('faq-overlay');
     if(!openBtn || !overlay){ return; }
     var closeBtn = document.getElementById('faq-overlay-close');
-    var picker = document.getElementById('faq-role-picker');
-    var roleBar = document.getElementById('faq-role-bar');
-    var roleBarLabel = document.getElementById('faq-role-bar-label');
-    var switchBtn = document.getElementById('faq-role-switch-btn');
-    var main = document.getElementById('faq-extra-main');
     var sectionsWrap = document.getElementById('faq-extra-sections');
     var lastFocused = null;
 
     var CATEGORIES = [
       {
         title: "תשלום והרשמה",
-        parent: [
+        items: [
           { q: "באילו אמצעים אפשר לשלם?", a: "ניתן לשלם באמצעות PayBox, ביט או במזומן. לתשלום בביט יש להעביר למספר 054-2101351, ולציין בהערות את שם הילד, שם המשפחה ואת הסיבה - ל\"ג בעומר. לא מתקבלת העברה בנקאית." },
           { q: "איך אדע שהתשלום התקבל?", a: "בשונה משנה קודמת, השנה לא תיפתח קבוצת וואטסאפ ייעודית לאירוע. לקראת האירוע נפרסם בקבוצות הקיימות (קבוצת השכבה וקבוצת ההורים) עדכון עם רשימת מי שהתשלום שלו התקבל אצלנו. מי שאינו מופיע ברשימה מוזמן לפנות אלינו בפרטי, ונוודא יחד שהכול מוסדר." },
           { q: "שילמנו, אבל בסוף הילד לא יכול להגיע - מה עושים?", a: "אנא פנו אלינו בפרטי, ונשמח לזכות אתכם בהחזר כספי מלא." },
           { q: "מה קורה אם לא הספקתי לשלם עד המועד האחרון (18.05.2027, 20:00)?", a: "אנא פנו אלינו בהקדם בפרטי (052-6305564), ונדאג שתהיו כלולים באירוע בלי בעיה." },
           { q: "התשלום הוא גם ההרשמה, או שצריך להירשם בנפרד?", a: "התשלום הוא ההרשמה עצמה. אין צורך במילוי טופס נפרד - מרגע שהתשלום מתבצע עם שם הילד/ה ושם המשפחה בהערות, הרישום הושלם." },
           { q: "שילמתי בטעות פעמיים / סכום לא נכון - מה עושים?", a: "ניתן לפנות אלינו במספר 052-6305564 ונתקן את הכול." }
-        ],
-        kid: []
+        ]
       },
       {
         title: "יום האירוע - לוגיסטיקה",
-        parent: [
-          { q: "מה השעות המדויקות של האירוע?", a: "מתחילים בשעה 20:05 עם תפילת ערבית, ומיד לאחריה מדורה וסעודה משותפת. האירוע צפוי להסתיים בסביבות השעה 22:00." },
+        items: [
+          { q: "מה השעות המדויקות של האירוע?", a: "מתחילים בשעה 20:05 עם תפילת ערבית, ומיד לאחריה מדורה וסעודה משותפת. האירוע צפוי להסתיים בסביבות השעה 22:00 (כשעתיים בסך הכול)." },
           { q: "מה עושים אם מאחרים להגיע?", a: "אין שום בעיה - אפשר להצטרף בכל שלב של הערב. אפשר להשתמש בקישורי הניווט ל-Waze או Google Maps שבדף האירוע." }
-        ],
-        kid: [
-          { q: "כמה זמן זה נמשך?", a: "בערך שעתיים - מ-20:05 ועד בסביבות 22:00." }
         ]
       },
       {
         title: "בטיחות ופיקוח",
-        parent: [
+        items: [
           { q: "מי אחראי בפועל על הילדים באירוע?", a: "מבוגר אחראי נוכח לאורך כל שעות האירוע, וניתן לפנות אליו בכל שאלה או צורך." },
           { q: "מה קורה אם ילד לא מרגיש טוב במהלך האירוע?", a: "המבוגר האחראי במקום יודע לזהות מצבים כאלה ולפעול בהתאם, כולל יצירת קשר איתכם באופן מיידי." },
           { q: "איך יוצרים קשר עם המארגנים בזמן אמת אם צריך?", a: "בוואטסאפ, במספר 052-6305564." }
-        ],
-        kid: []
+        ]
       },
       {
         title: "אוכל ואלרגיות",
-        parent: [
+        items: [
           { q: "מה אם הילד שלי רגיש לגלוטן?", a: "אנחנו דואגים לילדים עם רגישות לגלוטן באופן מיוחד בכל מה שצריך." },
           { q: "מה הכשרות של האוכל?", a: "כל האוכל באירוע מוגש בכשרויות בד\"ץ שונות." }
-        ],
-        kid: [
-          { q: "מה יש לאכול?", a: "המבורגר בלחמנייה ונקניקיות, עם טבעות בצל וצ'יפס בתור תוספות - הכל על האש. ולקינוח: מרשמלו וארטיקים, ומבחר בקבוקי שתייה." },
-          { q: "אפשר לבקש עוד?", a: "כן! דאגנו לכמויות נדיבות בשביל כולם." }
         ]
       },
       {
         title: "כללי ההתנהגות באירוע",
-        parent: [
+        items: [
           { q: "מה מדיניות הטלפונים הניידים?", a: "לצורך שימור החוויה המשותפת, מתבקשים המשתתפים להימנע משימוש בטלפונים ניידים במהלך האירוע. הבחירה להביא טלפון נתונה לשיקול דעתם של ההורים והילדים." }
-        ],
-        kid: []
+        ]
       },
       {
         title: "על המסורת",
-        shared: [
+        items: [
           { q: "כמה שנים האירוע קיים כבר?", a: "זו השנה השישית ברציפות! האירוע הפך למסורת אמיתית של שכבה ח' ביישוב." },
           { q: "איך התחיל הרעיון לאירוע?", a: "הרעיון נולד באופן די צנוע - כשהוא עלה לראשונה, איש לא דמיין שנגיע איתו עד היום. אם היו אומרים לנו לפני חמש שנים שזה יהפוך למסורת מטורפת שאיש לא ישכח, היינו בטוחים שמדובר באירוע חד-פעמי בלבד." },
           { q: "מי מארגן את האירוע?", a: "האירוע נוסד על ידי זוהר זילכה. כשנה לאחר מכן הצטרף אליו אורייה ליכטנברג, והפך ל\"הפקה ופיתוח\" של האירוע. מייסד: זוהר זילכה · הפקה ופיתוח: אורייה ליכטנברג." }
@@ -1994,22 +1941,19 @@
       }
     ];
 
-    var ROLE_LABELS = { parent: "הורים", kid: "ילדים" };
-
     function escapeHtml(str){
       return str.replace(/[&<>"']/g, function(ch){
         return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch];
       });
     }
 
-    function renderFaq(role){
+    function renderFaq(){
       var html = '';
       CATEGORIES.forEach(function(cat){
-        var items = cat.shared ? cat.shared : (role === 'parent' ? cat.parent : cat.kid);
-        if(!items || items.length === 0){ return; }
+        if(!cat.items || cat.items.length === 0){ return; }
         html += '<section class="faq-cat">';
         html += '<div class="faq-cat-head"><span class="dot"></span><h3>' + escapeHtml(cat.title) + '</h3></div>';
-        items.forEach(function(item, i){
+        cat.items.forEach(function(item){
           html += '<details class="faq">';
           html += '<summary>' + escapeHtml(item.q) + '<span class="plus"></span></summary>';
           html += '<div class="faq-a">' + escapeHtml(item.a) + '</div>';
@@ -2020,27 +1964,12 @@
       sectionsWrap.innerHTML = html;
     }
 
-    function selectRole(role){
-      renderFaq(role);
-      roleBarLabel.textContent = ROLE_LABELS[role];
-      picker.style.display = 'none';
-      roleBar.classList.add('show');
-      main.classList.add('show');
-      overlay.scrollTop = 0;
-    }
-
-    function resetRole(){
-      picker.style.display = 'flex';
-      roleBar.classList.remove('show');
-      main.classList.remove('show');
-      sectionsWrap.innerHTML = '';
-    }
-
     function openOverlay(){
       lastFocused = document.activeElement;
       overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
-      resetRole();
+      renderFaq();
+      overlay.scrollTop = 0;
       closeBtn.focus();
     }
     function closeOverlay(){
@@ -2054,11 +1983,6 @@
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && overlay.classList.contains('open')){ closeOverlay(); }
     });
-
-    picker.querySelectorAll('.role-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){ selectRole(btn.getAttribute('data-role')); });
-    });
-    switchBtn.addEventListener('click', resetRole);
   })();
   </script>
 </body>
