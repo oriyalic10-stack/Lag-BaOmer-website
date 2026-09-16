@@ -50,6 +50,46 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ===== iOS "Add to Home Screen" banner (for push notification support) ===== */
+  .ios-a2hs{
+    position:fixed;
+    left:16px; right:16px; bottom:16px;
+    z-index:60;
+    max-width:420px;
+    margin:0 auto;
+    background:linear-gradient(180deg, rgba(240,185,77,0.16), rgba(240,185,77,0.06)), var(--bg-hero, #080a16);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    display:none;
+    gap:12px;
+    align-items:flex-start;
+    box-shadow:0 16px 34px -12px rgba(0,0,0,0.45);
+    font-family:'Heebo', sans-serif;
+    animation:ios-a2hs-in .35s ease;
+  }
+  .ios-a2hs.show{ display:flex; }
+  @keyframes ios-a2hs-in{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .ios-a2hs .ia-icon{
+    width:34px; height:34px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(240,185,77,0.15);
+    border-radius:10px;
+  }
+  .ios-a2hs .ia-body{ flex:1; }
+  .ios-a2hs .ia-title{ font-weight:700; font-size:14px; margin-bottom:3px; color:var(--text-main); }
+  .ios-a2hs .ia-desc{ font-size:12.5px; color:var(--text-muted); line-height:1.55; }
+  .ios-a2hs .ia-desc b{ color:var(--gold); font-weight:700; }
+  .ios-a2hs .ia-close{
+    background:none; border:none; color:var(--text-muted);
+    font-size:16px; cursor:pointer; line-height:1; padding:2px; flex:none;
+  }
+  .ios-a2hs .ia-close:hover{ color:var(--text-main); }
+</style>
+<style>
   :root, html[data-theme="day"]{
     --bg-page:#f7f1e2;
     --bg-hero:#eaf3f2;
@@ -833,6 +873,108 @@
   }
   .print-btn-main svg{ width:20px; height:20px; }
 
+  /* ===== payment gate: parent-only banner + name form ===== */
+  .gate-box{
+    border:1px solid var(--line); border-radius:16px; background:var(--panel-2);
+    padding:26px; margin-top:18px;
+  }
+  .gate-box h3{ font-size:18px; color:var(--text-main); margin:0 0 8px; }
+  .gate-box .gate-note{ color:var(--text-muted); font-size:14px; line-height:1.6; margin:0 0 18px; }
+  .gate-check{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:14.5px; color:var(--text-main); line-height:1.55;
+    margin-bottom:18px; cursor:pointer;
+  }
+  .gate-check input{ margin-top:3px; flex:none; width:18px; height:18px; accent-color:var(--ember); cursor:pointer; }
+  .gate-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+  .gate-btn-primary{
+    background:linear-gradient(135deg, var(--ember), var(--ember-soft));
+    color:var(--btn-text); font-weight:700; font-size:15px; padding:13px 24px; border-radius:999px;
+    border:none; cursor:pointer; font-family:'Heebo', sans-serif;
+    box-shadow:0 8px 24px -8px rgba(223,106,48,0.5);
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .gate-btn-primary:disabled{ opacity:.4; cursor:not-allowed; box-shadow:none; }
+  .gate-btn-primary:not(:disabled):hover{ transform:translateY(-2px); }
+  .gate-btn-secondary{
+    background:transparent; color:var(--text-muted); font-weight:600; font-size:15px; padding:13px 20px;
+    border:1px solid var(--line); border-radius:999px; cursor:pointer; font-family:'Heebo', sans-serif;
+    text-decoration:none; display:inline-flex; align-items:center;
+  }
+  .gate-btn-secondary:hover{ border-color:var(--gold); color:var(--text-main); }
+
+  .support-link{
+    display:block; text-align:center; margin-top:16px;
+    color:var(--text-muted); font-size:13px; text-decoration:underline; text-underline-offset:3px;
+  }
+  .support-link:hover{ color:var(--gold); }
+
+  .name-fields{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .name-fields input[type="text"]{
+    flex:1; min-width:160px;
+    background:var(--bg-hero, #080a16); border:1px solid var(--line); border-radius:10px;
+    padding:13px 14px; color:var(--text-main); font-size:15px; font-family:'Heebo', sans-serif;
+  }
+  .name-fields input[type="text"]:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+
+  .pay-method-group{ display:flex; gap:8px; margin-bottom:14px; }
+  .pay-method-opt{
+    flex:1; text-align:center;
+    background:var(--bg-hero, #080a16); border:1px solid var(--line); border-radius:10px;
+    padding:10px 6px; cursor:pointer; font-size:13.5px; color:var(--text-muted);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .pay-method-opt input{ display:none; }
+  .pay-method-opt:has(input:checked){
+    border-color:var(--gold); color:var(--text-main); background:rgba(240,185,77,0.08);
+  }
+
+  .notes-field{
+    width:100%;
+    background:var(--bg-hero, #080a16); border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px; color:var(--text-main); font-size:14.5px; font-family:'Heebo', sans-serif;
+    resize:vertical; margin-bottom:14px; min-height:44px;
+  }
+  .notes-field:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  .notes-field::placeholder{ color:var(--text-muted); }
+
+  .gate-error{ color:#e86a33; font-size:13.5px; margin:-8px 0 14px; display:none; }
+  .gate-error.show{ display:block; }
+  .gate-sending{ color:var(--text-muted); font-size:13.5px; margin:-8px 0 14px; display:none; }
+  .gate-sending.show{ display:block; }
+
+  .payment-reveal{ display:none; }
+  .payment-reveal.show{ display:block; animation:fadeInUp .3s ease; }
+  @keyframes fadeInUp{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+  .payment-modal{
+    display:none;
+    position:fixed; inset:0; z-index:200;
+    background:rgba(8,6,4,0.86);
+    align-items:center; justify-content:center;
+    padding:20px;
+    overflow-y:auto;
+  }
+  .payment-modal.open{ display:flex; }
+  .payment-modal-card{
+    position:relative;
+    width:100%; max-width:440px;
+    max-height:88vh;
+    overflow-y:auto;
+    background:var(--bg-page);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 22px 22px;
+    box-shadow:0 24px 60px -14px rgba(0,0,0,0.6);
+  }
+  .payment-modal-close{
+    position:absolute; top:12px; left:12px;
+    background:var(--panel); border:1px solid var(--line); color:var(--text-muted);
+    width:32px; height:32px; border-radius:50%;
+    font-size:15px; cursor:pointer; line-height:1;
+  }
+  .payment-modal-close:hover{ color:var(--text-main); border-color:var(--gold); }
+
   .menu-photo{
     margin:20px auto 0;
     max-width:420px;
@@ -995,6 +1137,8 @@
   }
   .wa-btn:hover{ border-color:var(--gold); background:rgba(223,106,48,0.10); }
   .wa-btn svg{ width:20px; height:20px; color:var(--wa-icon); }
+  .contact-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .email-btn svg{ color:var(--gold); }
 
   .wa-float{
     position:fixed;
@@ -1042,7 +1186,7 @@
   }
   .payment-float:hover{ transform:scale(1.08); }
 
-  footer{ padding:36px 0 48px; text-align:center; color:var(--text-muted); font-size:13px; }
+  footer{ padding:36px 0 100px; text-align:center; color:var(--text-muted); font-size:13px; }
   footer .names{ margin-top:6px; opacity:.75; }
 
   #print-poster{ display:none; }
@@ -1317,26 +1461,97 @@
           <div class="ticket-body">
             <p>כמו בשנה שעברה, אנו דואגים למדורה ולסעודה באופן מרוכז, כך שלכל ילד יובטח הכול, ללא חוסרים וללא צורך בתיאום ציוד בין המשפחות. העלות משקפת רכישה של מוצרים איכותיים בלבד.</p>
             <p>המעוניינים בפירוט מלא של העלויות מוזמנים לעיין ב<a class="inline-link" href="https://docs.google.com/document/d/1SaIUvu3VRt1Lk2nH3qCIHr8amn4agR8vd4IfFNJP0ZM/edit?usp=sharing" target="_blank" rel="noopener">טבלת המחירים המפורטת</a>.</p>
-            <p>יש לציין בהערות התשלום את <strong style="color:var(--gold);">שם הילד ושם המשפחה</strong>. לקראת האירוע נפרסם בקבוצות הקיימות (קבוצת השכבה וקבוצת ההורים) עדכון עם רשימת המשלמים.</p>
           </div>
+
           <div class="ticket-tear"></div>
+
           <div class="ticket-action">
             <div class="price">
               <span class="amount">30 ₪</span>
               <span class="per">לילד, כולל הכול</span>
             </div>
-            <span class="paybox-btn">
+            <button type="button" class="paybox-btn" id="open-payment-modal-btn" style="border:none; cursor:pointer;">
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 1v4h4"/></svg>
-              מעבר לתשלום ב-PayBox
-            </span>
-          </div>
-          <div class="alt-pay">
-            <p>ניתן גם לשלם בביט (054-2101351) או במזומן.</p>
+              מעבר להרשמה ותשלום
+            </button>
           </div>
         </div>
         <p class="deadline">מועד אחרון להרשמה ולתשלום: יום שלישי, 18.05.2027, בשעה 20:00</p>
       </div>
     </section>
+
+    <!-- ===== payment modal ===== -->
+    <div class="payment-modal" id="payment-modal">
+      <div class="payment-modal-card" role="dialog" aria-modal="true" aria-label="הרשמה ותשלום">
+        <button type="button" class="payment-modal-close" id="payment-modal-close" aria-label="סגירה">✕</button>
+
+        <!-- STEP 1: parent-only gate -->
+        <div class="gate-box" id="gate-parent" style="border:none; padding:8px 4px;">
+          <h3>האזור הזה מיועד להורים</h3>
+          <p class="gate-note">כאן מתבצעת ההרשמה והתשלום עבור האירוע. נא לוודא שהורה הוא זה שממלא את הפרטים הבאים.</p>
+          <label class="gate-check">
+            <input type="checkbox" id="parent-confirm-check">
+            <span>אני מאשר/ת שאני ההורה הממלא/ת את הטופס</span>
+          </label>
+          <div class="gate-actions">
+            <button type="button" class="gate-btn-primary" id="parent-confirm-btn" disabled>המשך</button>
+            <button type="button" class="gate-btn-secondary" id="parent-cancel-btn">חזרה לעמוד הבית</button>
+          </div>
+          <a href="https://wa.me/972526305564?text=%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%9C%D7%A4%D7%A0%D7%99%20%D7%A9%D7%90%D7%A9%D7%9C%D7%9D" target="_blank" rel="noopener" class="support-link">יש לך שאלה לפני שממשיכים? דבר/י איתנו בוואטסאפ</a>
+        </div>
+
+        <!-- STEP 2: name form (hidden until parent gate passed) -->
+        <div class="gate-box" id="gate-form" style="display:none; border:none; padding:8px 4px;">
+          <h3>פרטי הילד/ה</h3>
+          <p class="gate-note">נא למלא שם פרטי ושם משפחה, ולבחור כיצד תרצו להמשיך לתשלום.</p>
+          <div class="name-fields">
+            <input type="text" id="child-first-name" placeholder="שם פרטי" autocomplete="given-name" required>
+            <input type="text" id="child-last-name" placeholder="שם משפחה" autocomplete="family-name" required>
+          </div>
+
+          <div class="pay-method-group" role="radiogroup" aria-label="אמצעי תשלום מועדף">
+            <label class="pay-method-opt">
+              <input type="radio" name="pay-method" value="PayBox" checked>
+              <span>PayBox</span>
+            </label>
+            <label class="pay-method-opt">
+              <input type="radio" name="pay-method" value="ביט">
+              <span>ביט</span>
+            </label>
+          </div>
+
+          <textarea id="child-notes" class="notes-field" placeholder="בקשות מיוחדות - אלרגיה, צורך מיוחד וכדומה (לא חובה)" rows="2"></textarea>
+
+          <label class="gate-check">
+            <input type="checkbox" id="not-payment-check">
+            <span>הבנתי ששליחת הטופס אינה מהווה תשלום בפועל - יש להשלים את התשלום בפועל דרך PayBox או ביט.</span>
+          </label>
+          <div class="gate-error" id="gate-error-msg">נא למלא שם פרטי, שם משפחה, ולסמן את התיבה.</div>
+          <div class="gate-sending" id="gate-sending-msg">שולח...</div>
+          <div class="gate-actions">
+            <button type="button" class="gate-btn-primary" id="form-submit-btn">המשך לתשלום</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: payment info, revealed only after the form above is sent -->
+        <div class="payment-reveal" id="payment-reveal" style="padding:8px 4px;">
+          <div class="price" style="margin-bottom:14px;">
+            <span class="amount">30 ₪</span>
+            <span class="per">לילד, כולל הכול</span>
+          </div>
+
+          <div id="paybox-method-block">
+            <span class="paybox-btn">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 1v4h4"/></svg>
+              מעבר לתשלום ב-PayBox
+            </span>
+          </div>
+          <div id="bit-method-block" class="alt-pay">
+            <p>ניתן גם לשלם בביט (054-2101351).</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section id="testimonials">
       <div class="wrap">
@@ -1447,10 +1662,16 @@
     <section id="contact" class="reveal" style="border-bottom:none;">
       <div class="wrap contact-box">
         <p>יש לכם שאלה נוספת שלא מצאה כאן מענה? נשמח שתפנו אלינו.</p>
-        <a class="wa-btn" href="https://wa.me/972526305564?text=%D7%A9%D7%9C%D7%95%D7%9D!%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%9C%D7%92%D7%91%D7%99%20%D7%90%D7%99%D7%A8%D7%95%D7%A2%20%D7%9C%22%D7%92%20%D7%91%D7%A2%D7%95%D7%9E%D7%A8%3A" target="_blank" rel="noopener">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.3 14.3c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.2-.8-2.7-1.1-4.4-3.8-4.5-4-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-1.9 1-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2.1.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.1.6.2.4 1 1.5 2.1 2.4 1.4 1.2 2 1.4 2.4 1.5.3.1.5.1.7-.1.2-.3.7-.9.9-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.2.5.2.6.4.1.2.1.9-.1 1.5Z"/></svg>
-          לפנייה בוואטסאפ - 052-6305564
-        </a>
+        <div class="contact-btns">
+          <a class="wa-btn" href="https://wa.me/972526305564?text=%D7%A9%D7%9C%D7%95%D7%9D!%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%9C%D7%92%D7%91%D7%99%20%D7%90%D7%99%D7%A8%D7%95%D7%A2%20%D7%9C%22%D7%92%20%D7%91%D7%A2%D7%95%D7%9E%D7%A8%3A" target="_blank" rel="noopener">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.3 14.3c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.2-.8-2.7-1.1-4.4-3.8-4.5-4-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-1.9 1-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2.1.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.1.6.2.4 1 1.5 2.1 2.4 1.4 1.2 2 1.4 2.4 1.5.3.1.5.1.7-.1.2-.3.7-.9.9-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.2.5.2.6.4.1.2.1.9-.1 1.5Z"/></svg>
+            לפנייה בוואטסאפ - 052-6305564
+          </a>
+          <a class="wa-btn email-btn" href="mailto:oriyalic10@gmail.com">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3V6Zm0 0 9 7 9-7"/></svg>
+            oriyalic10@gmail.com
+          </a>
+        </div>
       </div>
     </section>
 
@@ -1479,10 +1700,16 @@
         <div id="faq-extra-sections"></div>
         <div class="contact-box" style="padding-top:26px; border-top:1px solid var(--line); margin-top:6px;">
           <p>יש לכם שאלה נוספת שלא מצאה כאן מענה? נשמח שתפנו אלינו.</p>
-          <a class="wa-btn" href="https://wa.me/972526305564?text=%D7%A9%D7%9C%D7%95%D7%9D!%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%9C%D7%92%D7%91%D7%99%20%D7%90%D7%99%D7%A8%D7%95%D7%A2%20%D7%9C%22%D7%92%20%D7%91%D7%A2%D7%95%D7%9E%D7%A8%3A" target="_blank" rel="noopener">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.3 14.3c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.2-.8-2.7-1.1-4.4-3.8-4.5-4-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-1.9 1-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2.1.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.1.6.2.4 1 1.5 2.1 2.4 1.4 1.2 2 1.4 2.4 1.5.3.1.5.1.7-.1.2-.3.7-.9.9-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.2.5.2.6.4.1.2.1.9-.1 1.5Z"/></svg>
-            לפנייה בוואטסאפ - 052-6305564
-          </a>
+          <div class="contact-btns">
+            <a class="wa-btn" href="https://wa.me/972526305564?text=%D7%A9%D7%9C%D7%95%D7%9D!%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%9C%D7%92%D7%91%D7%99%20%D7%90%D7%99%D7%A8%D7%95%D7%A2%20%D7%9C%22%D7%92%20%D7%91%D7%A2%D7%95%D7%9E%D7%A8%3A" target="_blank" rel="noopener">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.3 14.3c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.2-.8-2.7-1.1-4.4-3.8-4.5-4-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-1.9 1-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2.1.1.2.1.4 0 .6-.1.2-.2.3-.3.5-.2.2-.3.3-.1.6.2.4 1 1.5 2.1 2.4 1.4 1.2 2 1.4 2.4 1.5.3.1.5.1.7-.1.2-.3.7-.9.9-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.2.5.2.6.4.1.2.1.9-.1 1.5Z"/></svg>
+              לפנייה בוואטסאפ - 052-6305564
+            </a>
+            <a class="wa-btn email-btn" href="mailto:oriyalic10@gmail.com">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3V6Zm0 0 9 7 9-7"/></svg>
+              oriyalic10@gmail.com
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -1995,6 +2222,199 @@
     closeBtn.addEventListener('click', closeOverlay);
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && overlay.classList.contains('open')){ closeOverlay(); }
+    });
+  })();
+  </script>
+  <div class="ios-a2hs" id="ios-a2hs">
+    <div class="ia-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f0b94d" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+    </div>
+    <div class="ia-body">
+      <div class="ia-title">רוצים לקבל התראות גם באייפון?</div>
+      <div class="ia-desc">לחצו על כפתור <b>השיתוף</b> בסרגל התחתון של ספארי, ואז על <b>"הוסף למסך הבית"</b> - זה כל מה שצריך.</div>
+    </div>
+    <button type="button" class="ia-close" id="ios-a2hs-close" aria-label="סגור הודעה">✕</button>
+  </div>
+
+  <script>
+  (function(){
+    var ua = navigator.userAgent;
+    var isIOSDevice = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isSafariBrowser = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(ua);
+    var isStandalone = (window.navigator.standalone === true) ||
+      (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+
+    if(!isIOSDevice || !isSafariBrowser || isStandalone){ return; }
+
+    var DISMISS_KEY = 'lagbaomer-ios-a2hs-dismissed';
+    try{
+      if(localStorage.getItem(DISMISS_KEY) === '1'){ return; }
+    }catch(e){}
+
+    var banner = document.getElementById('ios-a2hs');
+    var closeBtn = document.getElementById('ios-a2hs-close');
+    if(!banner || !closeBtn){ return; }
+
+    setTimeout(function(){
+      banner.classList.add('show');
+    }, 2500);
+
+    closeBtn.addEventListener('click', function(){
+      banner.classList.remove('show');
+      try{ localStorage.setItem(DISMISS_KEY, '1'); }catch(e){}
+    });
+  })();
+  </script>
+  <script>
+  (function(){
+    var WEB3FORMS_KEY = 'd2438382-ef05-4637-9f11-773c91297652';
+
+    // TODO: fill these in closer to the event, once real personal payment links exist
+    var PAYBOX_LINK = '';
+    var BIT_LINK = '';
+
+    var PAYBOX_ICON = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 1v4h4"/></svg>';
+    var BIT_ICON = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 2 12l10 10 10-10L12 2Zm0 4.2 5.8 5.8-5.8 5.8L6.2 12 12 6.2Z"/></svg>';
+
+    function methodButtonHTML(label, icon, link){
+      var tag = link ? 'a' : 'span';
+      var hrefAttr = link ? (' href="' + link + '" target="_blank" rel="noopener"') : '';
+      var styleAttr = link ? '' : ' style="cursor:default;"';
+      return '<' + tag + ' class="paybox-btn"' + hrefAttr + styleAttr + '>' + icon + ' מעבר לתשלום ב-' + label + '</' + tag + '>';
+    }
+    function methodTextHTML(label, note){
+      return '<div class="alt-pay"><p>ניתן גם לשלם ב-' + label + (note ? ' (' + note + ')' : '') + '.</p></div>';
+    }
+
+    function renderPaymentMethodsStatic(){
+      var paypboxBlock = document.getElementById('paybox-method-block');
+      var bitBlock = document.getElementById('bit-method-block');
+      paypboxBlock.innerHTML = methodButtonHTML('PayBox', PAYBOX_ICON, PAYBOX_LINK);
+      bitBlock.innerHTML = methodTextHTML('ביט', '054-2101351');
+    }
+
+    var modal = document.getElementById('payment-modal');
+    var openBtn = document.getElementById('open-payment-modal-btn');
+    var closeBtn = document.getElementById('payment-modal-close');
+    var cancelBtn = document.getElementById('parent-cancel-btn');
+    var gateParent = document.getElementById('gate-parent');
+    var gateForm = document.getElementById('gate-form');
+    var paymentReveal = document.getElementById('payment-reveal');
+    if(!modal || !openBtn || !gateParent || !gateForm || !paymentReveal){ return; }
+
+    var lastFocused = null;
+
+    function resetFlow(){
+      gateParent.style.display = 'block';
+      gateForm.style.display = 'none';
+      paymentReveal.classList.remove('show');
+      document.getElementById('parent-confirm-check').checked = false;
+      document.getElementById('parent-confirm-btn').disabled = true;
+      document.getElementById('child-first-name').value = '';
+      document.getElementById('child-last-name').value = '';
+      document.getElementById('child-notes').value = '';
+      var payRadios = document.getElementsByName('pay-method');
+      for(var i=0;i<payRadios.length;i++){ payRadios[i].checked = (payRadios[i].value === 'PayBox'); }
+      document.getElementById('not-payment-check').checked = false;
+      document.getElementById('gate-error-msg').classList.remove('show');
+      document.getElementById('gate-sending-msg').classList.remove('show');
+      document.getElementById('form-submit-btn').disabled = false;
+    }
+
+    function openModal(){
+      lastFocused = document.activeElement;
+      resetFlow();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      if(lastFocused){ lastFocused.focus(); }
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    if(cancelBtn){ cancelBtn.addEventListener('click', closeModal); }
+    modal.addEventListener('click', function(e){
+      if(e.target === modal){ closeModal(); }
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && modal.classList.contains('open')){ closeModal(); }
+    });
+
+    var parentCheck = document.getElementById('parent-confirm-check');
+    var parentBtn = document.getElementById('parent-confirm-btn');
+    parentCheck.addEventListener('change', function(){
+      parentBtn.disabled = !parentCheck.checked;
+    });
+    parentBtn.addEventListener('click', function(){
+      gateParent.style.display = 'none';
+      gateForm.style.display = 'block';
+      var firstNameInput = document.getElementById('child-first-name');
+      if(firstNameInput){ firstNameInput.focus(); }
+    });
+
+    var firstNameEl = document.getElementById('child-first-name');
+    var lastNameEl = document.getElementById('child-last-name');
+    var notPaymentCheck = document.getElementById('not-payment-check');
+    var submitBtn = document.getElementById('form-submit-btn');
+    var errorMsg = document.getElementById('gate-error-msg');
+    var sendingMsg = document.getElementById('gate-sending-msg');
+
+    submitBtn.addEventListener('click', function(){
+      var first = firstNameEl.value.trim();
+      var last = lastNameEl.value.trim();
+      var notes = document.getElementById('child-notes').value.trim();
+      var payMethod = 'PayBox';
+      var payRadios = document.getElementsByName('pay-method');
+      for(var i=0;i<payRadios.length;i++){ if(payRadios[i].checked){ payMethod = payRadios[i].value; } }
+
+      if(!first || !last || !notPaymentCheck.checked){
+        errorMsg.classList.add('show');
+        return;
+      }
+      errorMsg.classList.remove('show');
+      sendingMsg.classList.add('show');
+      submitBtn.disabled = true;
+
+      var fullName = first + ' ' + last;
+      var messageBody = 'נרשם/ה לאירוע: ' + fullName + '\nאמצעי תשלום שנבחר: ' + payMethod;
+      if(notes){ messageBody += '\nבקשה מיוחדת: ' + notes; }
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'הרשמה חדשה - ל"ג בעומר',
+          name: fullName,
+          message: messageBody
+        })
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        sendingMsg.classList.remove('show');
+        if(data.success){
+          gateForm.style.display = 'none';
+          paymentReveal.classList.add('show');
+          renderPaymentMethodsStatic();
+          paymentReveal.scrollIntoView({ behavior:'smooth', block:'start' });
+          var modalCard = document.querySelector('.payment-modal-card');
+          if(modalCard){ modalCard.scrollTop = 0; }
+        }else{
+          errorMsg.textContent = 'משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות אלינו בוואטסאפ.';
+          errorMsg.classList.add('show');
+          submitBtn.disabled = false;
+        }
+      })
+      .catch(function(){
+        sendingMsg.classList.remove('show');
+        errorMsg.textContent = 'משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות אלינו בוואטסאפ.';
+        errorMsg.classList.add('show');
+        submitBtn.disabled = false;
+      });
     });
   })();
   </script>
