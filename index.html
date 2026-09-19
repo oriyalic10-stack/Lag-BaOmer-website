@@ -910,12 +910,12 @@
   .support-link:hover{ color:var(--gold); }
 
   .name-fields{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
-  .name-fields input[type="text"]{
+  .name-fields input[type="text"], .name-fields input[type="tel"], .name-fields input[type="email"]{
     flex:1; min-width:160px;
     background:var(--bg-hero, #080a16); border:1px solid var(--line); border-radius:10px;
     padding:13px 14px; color:var(--text-main); font-size:15px; font-family:'Heebo', sans-serif;
   }
-  .name-fields input[type="text"]:focus{ outline:2px solid var(--gold); outline-offset:1px; }
+  .name-fields input[type="text"]:focus, .name-fields input[type="tel"]:focus, .name-fields input[type="email"]:focus{ outline:2px solid var(--gold); outline-offset:1px; }
 
   .pay-method-group{ display:flex; gap:8px; margin-bottom:14px; }
   .pay-method-opt{
@@ -1139,6 +1139,13 @@
   .wa-btn svg{ width:20px; height:20px; color:var(--wa-icon); }
   .contact-btns{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
   .email-btn svg{ color:var(--gold); }
+  .contact-form-divider{
+    display:flex; align-items:center; gap:12px; margin:28px auto 20px; max-width:440px;
+    color:var(--text-muted); font-size:13px;
+  }
+  .contact-form-divider::before, .contact-form-divider::after{
+    content:''; flex:1; height:1px; background:var(--line);
+  }
 
   .wa-float{
     position:fixed;
@@ -1671,6 +1678,42 @@
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3V6Zm0 0 9 7 9-7"/></svg>
             oriyalic10@gmail.com
           </a>
+        </div>
+
+        <div class="contact-form-divider"><span>או מלאו טופס, ונחזור אליכם</span></div>
+
+        <div class="gate-box" id="contact-form-box" style="max-width:440px; margin:0 auto; text-align:right;">
+          <div class="name-fields">
+            <input type="text" id="cf-fullname" placeholder="שם מלא" autocomplete="name" required>
+          </div>
+          <div class="name-fields">
+            <input type="text" id="cf-subject" placeholder="כותרת / נושא" required>
+          </div>
+          <textarea id="cf-reason" class="notes-field" placeholder="סיבת הפנייה (פירוט)" rows="3" required></textarea>
+
+          <div class="pay-method-group" role="radiogroup" aria-label="איך לחזור אליכם">
+            <label class="pay-method-opt">
+              <input type="radio" name="cf-method" value="וואטסאפ" checked>
+              <span>וואטסאפ</span>
+            </label>
+            <label class="pay-method-opt">
+              <input type="radio" name="cf-method" value="מייל">
+              <span>מייל</span>
+            </label>
+          </div>
+
+          <div class="name-fields">
+            <input type="tel" id="cf-phone" placeholder="מספר טלפון" autocomplete="tel" dir="rtl" style="text-align:right;" required>
+            <input type="email" id="cf-email" placeholder="כתובת מייל" autocomplete="email" style="display:none;">
+          </div>
+
+          <div class="gate-error" id="cf-error-msg">נא למלא את כל השדות.</div>
+          <div class="gate-sending" id="cf-sending-msg">שולח...</div>
+          <div class="gate-sending" id="cf-success-msg" style="color:var(--wa-icon, #3fce6a);">נשלח בהצלחה! נחזור אליכם בקרוב.</div>
+
+          <div class="gate-actions" style="justify-content:center;">
+            <button type="button" class="gate-btn-primary" id="cf-submit-btn">שליחה</button>
+          </div>
         </div>
       </div>
     </section>
@@ -2412,6 +2455,121 @@
       .catch(function(){
         sendingMsg.classList.remove('show');
         errorMsg.textContent = 'משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות אלינו בוואטסאפ.';
+        errorMsg.classList.add('show');
+        submitBtn.disabled = false;
+      });
+    });
+  })();
+  </script>
+  <script>
+  (function(){
+    var WEB3FORMS_KEY = 'd2438382-ef05-4637-9f11-773c91297652';
+
+    var fullnameEl = document.getElementById('cf-fullname');
+    var subjectEl = document.getElementById('cf-subject');
+    var reasonEl = document.getElementById('cf-reason');
+    var phoneEl = document.getElementById('cf-phone');
+    var emailEl = document.getElementById('cf-email');
+    var errorMsg = document.getElementById('cf-error-msg');
+    var sendingMsg = document.getElementById('cf-sending-msg');
+    var successMsg = document.getElementById('cf-success-msg');
+    var submitBtn = document.getElementById('cf-submit-btn');
+    if(!fullnameEl || !submitBtn){ return; }
+
+    var methodRadios = document.getElementsByName('cf-method');
+    function currentMethod(){
+      for(var i=0;i<methodRadios.length;i++){ if(methodRadios[i].checked){ return methodRadios[i].value; } }
+      return 'וואטסאפ';
+    }
+    function syncMethodFields(){
+      if(currentMethod() === 'מייל'){
+        phoneEl.style.display = 'none';
+        phoneEl.required = false;
+        emailEl.style.display = '';
+        emailEl.required = true;
+      }else{
+        emailEl.style.display = 'none';
+        emailEl.required = false;
+        phoneEl.style.display = '';
+        phoneEl.required = true;
+      }
+    }
+    for(var i=0;i<methodRadios.length;i++){
+      methodRadios[i].addEventListener('change', syncMethodFields);
+    }
+    syncMethodFields();
+
+    submitBtn.addEventListener('click', function(){
+      var fullname = fullnameEl.value.trim();
+      var subject = subjectEl.value.trim();
+      var reason = reasonEl.value.trim();
+      var method = currentMethod();
+      var contactDetail = method === 'מייל' ? emailEl.value.trim() : phoneEl.value.trim();
+
+      errorMsg.classList.remove('show');
+      successMsg.classList.remove('show');
+
+      if(!fullname || !subject || !reason || !contactDetail){
+        errorMsg.textContent = 'נא למלא את כל השדות.';
+        errorMsg.classList.add('show');
+        return;
+      }
+
+      if(method === 'מייל'){
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailPattern.test(contactDetail)){
+          errorMsg.textContent = 'כתובת המייל לא תקינה - נא לבדוק ולנסות שוב.';
+          errorMsg.classList.add('show');
+          return;
+        }
+      }else{
+        var digitsOnly = contactDetail.replace(/[\s-]/g, '');
+        var phonePattern = /^0\d{8,9}$/;
+        if(!phonePattern.test(digitsOnly)){
+          errorMsg.textContent = 'מספר הטלפון לא תקין - נא לבדוק ולנסות שוב.';
+          errorMsg.classList.add('show');
+          return;
+        }
+      }
+      sendingMsg.classList.add('show');
+      submitBtn.disabled = true;
+
+      var messageBody = 'שם מלא: ' + fullname +
+        '\nכותרת: ' + subject +
+        '\nסיבת הפנייה: ' + reason +
+        '\nלחזור אליהם דרך: ' + method +
+        '\nפרטי יצירת קשר: ' + contactDetail;
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'פנייה חדשה מהאתר - ' + subject,
+          name: fullname,
+          message: messageBody
+        })
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        sendingMsg.classList.remove('show');
+        if(data.success){
+          successMsg.classList.add('show');
+          submitBtn.disabled = false;
+          fullnameEl.value = '';
+          subjectEl.value = '';
+          reasonEl.value = '';
+          phoneEl.value = '';
+          emailEl.value = '';
+        }else{
+          errorMsg.textContent = 'משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות אלינו ישירות למעלה.';
+          errorMsg.classList.add('show');
+          submitBtn.disabled = false;
+        }
+      })
+      .catch(function(){
+        sendingMsg.classList.remove('show');
+        errorMsg.textContent = 'משהו השתבש בשליחה. אפשר לנסות שוב, או לפנות אלינו ישירות למעלה.';
         errorMsg.classList.add('show');
         submitBtn.disabled = false;
       });
