@@ -1193,6 +1193,44 @@
   }
   .payment-float:hover{ transform:scale(1.08); }
 
+  /* legal overlay (privacy policy + terms of use) */
+  footer .legal-links{ margin-top:14px; display:flex; justify-content:center; flex-wrap:wrap; gap:0 22px; }
+  footer .legal-links a{
+    color:var(--text-muted);
+    text-decoration:underline;
+    text-underline-offset:3px;
+    padding:10px 4px;
+  }
+  footer .legal-links a:hover{ color:var(--text-main); }
+
+  .legal-tabs{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; padding:14px 0 4px; }
+  .legal-tab{
+    font-family:'Heebo', sans-serif; font-size:14px; font-weight:600;
+    color:var(--text-muted); background:none;
+    border:1px solid var(--line); border-radius:999px;
+    padding:9px 20px; cursor:pointer;
+  }
+  .legal-tab:hover{ color:var(--text-main); border-color:var(--gold); }
+  .legal-tab[aria-pressed="true"]{ color:var(--btn-text); background:var(--ember); border-color:var(--ember); }
+
+  .legal-doc{ display:none; }
+  .legal-doc.show{ display:block; }
+  .legal-doc .faq-overlay-head{ padding-bottom:14px; }
+  .legal-updated{ color:var(--text-muted); font-size:13px; text-align:center; margin:0 0 18px; }
+  .legal-summary{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; font-size:15px; line-height:1.8; margin:0 0 6px;
+  }
+  .legal-doc h3{
+    font-family:'Suez One', serif; font-weight:400; font-size:19px;
+    color:var(--text-main); margin:28px 0 8px;
+  }
+  .legal-doc p, .legal-doc li{ font-size:15px; line-height:1.85; color:var(--text-main); }
+  .legal-doc p{ margin:0 0 10px; }
+  .legal-doc ul{ margin:0 0 10px; padding:0 22px 0 0; }
+  .legal-doc li{ margin-bottom:6px; }
+  .legal-doc a{ color:var(--ember-text); }
+
   footer{ padding:36px 0 100px; text-align:center; color:var(--text-muted); font-size:13px; }
   footer .names{ margin-top:6px; opacity:.75; }
 
@@ -1758,10 +1796,131 @@
     </div>
   </div>
 
+  <div class="faq-overlay" id="legal-overlay" role="dialog" aria-modal="true" aria-label="מדיניות פרטיות ותנאי שימוש">
+    <div class="faq-overlay-inner">
+      <button type="button" class="faq-back-link" id="legal-overlay-close">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        חזרה לדף האירוע
+      </button>
+
+      <div class="legal-tabs">
+        <button type="button" class="legal-tab" data-legal-tab="privacy-policy" aria-pressed="true">מדיניות פרטיות</button>
+        <button type="button" class="legal-tab" data-legal-tab="terms-of-use" aria-pressed="false">תנאי שימוש</button>
+      </div>
+
+      <!-- ===== privacy policy ===== -->
+      <article class="legal-doc show" id="legal-doc-privacy">
+        <div class="faq-overlay-head">
+          <h2>מדיניות פרטיות</h2>
+        </div>
+        <p class="legal-updated">עודכן לאחרונה: 20.09.2026</p>
+        <p class="legal-summary">האתר נועד למסור מידע על אירוע ל"ג בעומר של שכבה ח' ביישוב ולאפשר הרשמה אליו. הוא מופעל על ידי אורייה ליכטנברג. אנחנו אוספים רק את המידע הדרוש לכך, איננו מוכרים אותו ואיננו משתמשים בו לפרסום.</p>
+
+        <h3>איזה מידע נאסף</h3>
+        <ul>
+          <li><strong>הרשמה לאירוע</strong> (באזור המיועד להורים): שם פרטי ושם משפחה של הילד/ה, אמצעי התשלום שבחרתם, ובקשות מיוחדות אם בחרתם למלא, למשל אלרגיה או צורך מיוחד. מידע כזה עשוי להיות רגיש, ומסירתו היא לפי בחירתכם בלבד. מילוי השדה מהווה הסכמה שנשתמש בו כדי להיערך לצורך.</li>
+          <li><strong>טופס יצירת קשר:</strong> שם מלא, נושא ותיאור הפנייה, ומספר טלפון או כתובת מייל, לפי הדרך שבחרתם שנחזור אליכם.</li>
+          <li><strong>התראות (לא חובה):</strong> אם תאשרו קבלת התראות בדפדפן, יישמר מזהה טכני של המכשיר אצל ספק שירות ההתראות, כדי שנוכל לשלוח עדכונים על האירוע. אפשר לבטל בכל עת בהגדרות הדפדפן.</li>
+          <li><strong>העדפות תצוגה:</strong> בחירות כמו מצב יום/לילה וגודל טקסט נשמרות רק במכשיר שלכם, ואינן נשלחות אלינו.</li>
+          <li><strong>תשלום:</strong> התשלום מתבצע ב-PayBox, בביט או במזומן, ולא באתר. האתר אינו מקבל ואינו שומר פרטי אשראי או פרטי חשבון בנק.</li>
+        </ul>
+
+        <p>מסירת המידע אינה חובה על פי דין. עם זאת, בלי פרטי ההרשמה לא נוכל לרשום את הילד/ה לאירוע, ובלי פרטי קשר לא נוכל לחזור אליכם.</p>
+
+        <h3>למה אנחנו משתמשים במידע</h3>
+        <ul>
+          <li>לרשום את הילד/ה לאירוע ולוודא שהתשלום התקבל.</li>
+          <li>להיערך לצרכים מיוחדים, כמו אלרגיה או רגישות לגלוטן.</li>
+          <li>לענות לפניות.</li>
+          <li>לשלוח עדכונים על האירוע למי שאישר התראות.</li>
+        </ul>
+
+        <h3>עם מי המידע משותף</h3>
+        <p>הטפסים והאתר פועלים באמצעות שירותים טכניים של צד שלישי: Web3Forms (העברת הטפסים למייל שלנו), OneSignal (התראות), Google (גופנים ומפה מוטמעת) ו-GitHub Pages (אחסון האתר). לשירותים אלה עשויים להיות נתוני חיבור טכניים, כמו כתובת IP, והם כפופים למדיניות הפרטיות שלהם. חלקם פועלים מחוץ לישראל.</p>
+        <p><strong>רשימת ששילמו:</strong> לקראת האירוע אנחנו מפרסמים בקבוצות השכבה וההורים רשימת שמות של ילדים שהתשלום שלהם התקבל.</p>
+        <p>בקשות מיוחדות, כמו אלרגיות, מיועדות לנו בלבד ולא יפורסמו. מלבד האמור כאן, לא נעביר מידע לאף גורם, אלא אם נידרש לכך על פי דין.</p>
+
+        <h3>שמירת המידע</h3>
+        <p>לאחר סיום האירוע וסגירת ענייני התשלום וההחזרים, איננו משתמשים עוד במידע שנאסף ואיננו עושים בו כל פעולה. המידע נשמר אצלנו.</p>
+
+        <h3>ילדים</h3>
+        <p>האתר מיועד להורים. ההרשמה והתשלום מתבצעים על ידי הורה בלבד. פרטים על הילדים נאספים מההורים בלבד, ולא מהילדים ישירות.</p>
+
+        <h3>אבטחה</h3>
+        <p>הטפסים נשלחים בחיבור מוצפן (HTTPS) ואנחנו נוקטים אמצעים סבירים להגנה על המידע. עם זאת, אין שיטה שמבטיחה אבטחה מלאה.</p>
+
+        <h3>עוגיות ואחסון מקומי</h3>
+        <p>האתר עצמו אינו משתמש בעוגיות לפרסום או למעקב. שירותים חיצוניים שמוטמעים בו, כמו מפת גוגל והתראות, עשויים לשמור מזהים משלהם, לפי המדיניות שלהם.</p>
+
+        <h3>הזכויות שלכם</h3>
+        <p>לפי חוק הגנת הפרטיות, התשמ"א-1981, אתם רשאים לבקש לעיין במידע שנשמר עליכם ועל ילדכם, לתקן אותו או למחוק אותו. פנו אלינו ונטפל בבקשה.</p>
+
+        <h3>שינויים במדיניות</h3>
+        <p>נוכל לעדכן מדיניות זו מעת לעת. הנוסח העדכני יופיע כאן, עם תאריך העדכון.</p>
+
+        <h3>יצירת קשר</h3>
+        <p>לשאלות ולבקשות בנושא פרטיות: וואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או מייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>.</p>
+      </article>
+
+      <!-- ===== terms of use ===== -->
+      <article class="legal-doc" id="legal-doc-terms">
+        <div class="faq-overlay-head">
+          <h2>תנאי שימוש</h2>
+        </div>
+        <p class="legal-updated">עודכן לאחרונה: 20.09.2026</p>
+        <p class="legal-summary">האתר מרכז מידע על אירוע ל"ג בעומר השנתי של שכבה ח' ביישוב ומאפשר הרשמה אליו. הוא מופעל ביוזמה קהילתית פרטית על ידי אורייה ליכטנברג. השימוש באתר מהווה הסכמה לתנאים האלה.</p>
+
+        <h3>המידע באתר</h3>
+        <p>אנחנו משתדלים שהפרטים באתר (תאריך, שעה, מיקום ומחיר) יהיו מדויקים ועדכניים, אך הם עשויים להשתנות. עדכונים יפורסמו באתר ובקבוצות השכבה וההורים. במקרה של סתירה, העדכון האחרון הוא המחייב.</p>
+
+        <h3>הרשמה ותשלום</h3>
+        <ul>
+          <li>ההרשמה מיועדת להורים בלבד.</li>
+          <li>שליחת טופס ההרשמה אינה תשלום. ההרשמה הושלמה עם קבלת התשלום אצלנו.</li>
+          <li>העלות והמועד האחרון להרשמה ולתשלום הם כפי שמפורסם בדף האירוע.</li>
+          <li>אפשר לשלם ב-PayBox, בביט או במזומן. העברה בנקאית אינה מתקבלת. התשלום בשירותים אלה כפוף לתנאים שלהם.</li>
+          <li>אם ילד/ה שנרשם לא יכול להגיע, יש לפנות אלינו ולקבל החזר כספי מלא.</li>
+        </ul>
+
+        <h3>ההשתתפות באירוע</h3>
+        <ul>
+          <li>מבוגר אחראי נוכח לאורך כל שעות האירוע.</li>
+          <li>הורים מתבקשים למסור לנו מראש מידע חשוב על אלרגיות או צרכים מיוחדים של ילדם.</li>
+          <li>המשתתפים מתבקשים לפעול לפי הנחיות המבוגר האחראי ולשמור על הבטיחות סביב המדורה.</li>
+        </ul>
+
+        <h3>שימוש הוגן באתר</h3>
+        <p>נא למסור פרטים נכונים בטפסים, ולא להשתמש בהם לשליחת ספאם או תוכן פוגעני. אין לנסות לשבש את פעילות האתר.</p>
+
+        <h3>תכני האתר</h3>
+        <p>תכני האתר נוצרו עבור האירוע. אפשר לשתף את קישור האתר ולהדפיס את ההזמנה לשימוש אישי. אין להעתיק או להפיץ את התכנים למטרות מסחריות בלי אישור מאיתנו.</p>
+
+        <h3>קישורים ושירותים חיצוניים</h3>
+        <p>האתר מפנה לשירותים של צד שלישי, כמו Waze, Google Maps, PayBox, ביט, וואטסאפ ושירותי יומן. השירותים האלה אינם באחריותנו והם כפופים לתנאים ולמדיניות הפרטיות שלהם.</p>
+
+        <h3>נגישות</h3>
+        <p>השקענו בהנגשת האתר, עם הגדרות תצוגה, הקראת הדף ועוד. נתקלתם בקושי? כתבו לנו ונטפל בכך.</p>
+
+        <h3>הגבלת אחריות</h3>
+        <p>האתר והמידע בו מסופקים כפי שהם. איננו אחראים לתקלות טכניות או להפסקות זמניות בשירות, כולל תקלות בשירותי צד שלישי שהאתר נשען עליהם.</p>
+
+        <h3>שינויים ודין חל</h3>
+        <p>נוכל לעדכן את התנאים מעת לעת. הנוסח העדכני יופיע כאן, עם תאריך העדכון. על תנאים אלה חל הדין הישראלי.</p>
+
+        <h3>יצירת קשר</h3>
+        <p>וואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או מייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>. מידע על איסוף ושימוש בפרטים אישיים מופיע ב<a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות הפרטיות</a>.</p>
+      </article>
+    </div>
+  </div>
+
   <footer>
     <div class="wrap">
       <p>מסורת שכבתית · שנה שישית</p>
       <p class="names">מייסד: זוהר זילכה · הפקה ופיתוח: אורייה ליכטנברג</p>
+      <nav class="legal-links" aria-label="מידע משפטי">
+        <a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות פרטיות</a>
+        <a href="#terms-of-use" data-legal-open="terms-of-use">תנאי שימוש</a>
+      </nav>
     </div>
   </footer>
 
@@ -2266,6 +2425,64 @@
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && overlay.classList.contains('open')){ closeOverlay(); }
     });
+  })();
+  </script>
+  <script>
+  (function(){
+    var overlay = document.getElementById('legal-overlay');
+    if(!overlay){ return; }
+    var closeBtn = document.getElementById('legal-overlay-close');
+    var docs = {
+      'privacy-policy': document.getElementById('legal-doc-privacy'),
+      'terms-of-use': document.getElementById('legal-doc-terms')
+    };
+    var tabs = overlay.querySelectorAll('.legal-tab');
+    var lastFocused = null;
+
+    function show(which){
+      Object.keys(docs).forEach(function(k){ docs[k].classList.toggle('show', k === which); });
+      for(var i=0;i<tabs.length;i++){
+        tabs[i].setAttribute('aria-pressed', tabs[i].getAttribute('data-legal-tab') === which ? 'true' : 'false');
+      }
+      overlay.scrollTop = 0;
+    }
+    function open(which){
+      if(!docs[which]){ return; }
+      if(!overlay.classList.contains('open')){
+        lastFocused = document.activeElement;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+      show(which);
+      try{ history.replaceState(null, '', '#' + which); }catch(e){}
+    }
+    function close(){
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
+      if(lastFocused){ lastFocused.focus(); }
+    }
+
+    document.addEventListener('click', function(e){
+      var trigger = e.target.closest ? e.target.closest('[data-legal-open]') : null;
+      if(!trigger){ return; }
+      e.preventDefault();
+      open(trigger.getAttribute('data-legal-open'));
+    });
+    for(var i=0;i<tabs.length;i++){
+      tabs[i].addEventListener('click', function(){ open(this.getAttribute('data-legal-tab')); });
+    }
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('open')){ close(); }
+    });
+    window.addEventListener('hashchange', function(){
+      var key = location.hash.replace('#', '');
+      if(docs[key]){ open(key); }
+    });
+    var initial = location.hash.replace('#', '');
+    if(docs[initial]){ open(initial); }
   })();
   </script>
   <div class="ios-a2hs" id="ios-a2hs">
