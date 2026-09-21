@@ -900,6 +900,7 @@
     margin-bottom:18px; cursor:pointer;
   }
   .gate-check input{ margin-top:3px; flex:none; width:18px; height:18px; accent-color:var(--ember); cursor:pointer; }
+  .gate-check a{ color:var(--ember-text); text-decoration:underline; text-underline-offset:3px; }
   .gate-actions{ display:flex; gap:12px; flex-wrap:wrap; }
   .gate-btn-primary{
     background:linear-gradient(135deg, var(--ember), var(--ember-soft));
@@ -1582,10 +1583,15 @@
           <textarea id="child-notes" class="notes-field" placeholder="בקשות מיוחדות - אלרגיה, צורך מיוחד וכדומה (לא חובה)" rows="2"></textarea>
 
           <label class="gate-check">
+            <input type="checkbox" id="privacy-consent-check">
+            <span>קראתי ואני מסכים/ה ל<a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות הפרטיות</a> ול<a href="#terms-of-use" data-legal-open="terms-of-use">תנאי השימוש</a> של האתר.</span>
+          </label>
+
+          <label class="gate-check">
             <input type="checkbox" id="not-payment-check">
             <span>הבנתי ששליחת הטופס אינה מהווה תשלום בפועל - יש להשלים את התשלום בפועל דרך PayBox או ביט.</span>
           </label>
-          <div class="gate-error" id="gate-error-msg">נא למלא שם פרטי, שם משפחה, ולסמן את התיבה.</div>
+          <div class="gate-error" id="gate-error-msg">נא למלא שם פרטי ושם משפחה, ולסמן את שתי התיבות.</div>
           <div class="gate-sending" id="gate-sending-msg">שולח...</div>
           <div class="gate-actions">
             <button type="button" class="gate-btn-primary" id="form-submit-btn">המשך לתשלום</button>
@@ -2452,6 +2458,7 @@
     };
     var tabs = overlay.querySelectorAll('.legal-tab');
     var lastFocused = null;
+    var prevOverflow = '';
 
     function show(which){
       Object.keys(docs).forEach(function(k){ docs[k].classList.toggle('show', k === which); });
@@ -2464,6 +2471,7 @@
       if(!docs[which]){ return; }
       if(!overlay.classList.contains('open')){
         lastFocused = document.activeElement;
+        prevOverflow = document.body.style.overflow;
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
         closeBtn.focus();
@@ -2473,7 +2481,7 @@
     }
     function close(){
       overlay.classList.remove('open');
-      document.body.style.overflow = '';
+      document.body.style.overflow = prevOverflow;
       try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
       if(lastFocused){ lastFocused.focus(); }
     }
@@ -2489,7 +2497,10 @@
     }
     closeBtn.addEventListener('click', close);
     document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && overlay.classList.contains('open')){ close(); }
+      if(e.key === 'Escape' && overlay.classList.contains('open')){
+        e.stopImmediatePropagation(); /* close only this window, not the registration form behind it */
+        close();
+      }
     });
     window.addEventListener('hashchange', function(){
       var key = location.hash.replace('#', '');
@@ -2590,6 +2601,7 @@
       var payRadios = document.getElementsByName('pay-method');
       for(var i=0;i<payRadios.length;i++){ payRadios[i].checked = (payRadios[i].value === 'PayBox'); }
       document.getElementById('not-payment-check').checked = false;
+      document.getElementById('privacy-consent-check').checked = false;
       document.getElementById('gate-error-msg').classList.remove('show');
       document.getElementById('gate-sending-msg').classList.remove('show');
       document.getElementById('form-submit-btn').disabled = false;
@@ -2615,6 +2627,8 @@
       if(e.target === modal){ closeModal(); }
     });
     document.addEventListener('keydown', function(e){
+      var legal = document.getElementById('legal-overlay');
+      if(legal && legal.classList.contains('open')){ return; }
       if(e.key === 'Escape' && modal.classList.contains('open')){ closeModal(); }
     });
 
@@ -2633,6 +2647,7 @@
     var firstNameEl = document.getElementById('child-first-name');
     var lastNameEl = document.getElementById('child-last-name');
     var notPaymentCheck = document.getElementById('not-payment-check');
+    var privacyCheck = document.getElementById('privacy-consent-check');
     var submitBtn = document.getElementById('form-submit-btn');
     var errorMsg = document.getElementById('gate-error-msg');
     var sendingMsg = document.getElementById('gate-sending-msg');
@@ -2645,7 +2660,8 @@
       var payRadios = document.getElementsByName('pay-method');
       for(var i=0;i<payRadios.length;i++){ if(payRadios[i].checked){ payMethod = payRadios[i].value; } }
 
-      if(!first || !last || !notPaymentCheck.checked){
+      if(!first || !last || !notPaymentCheck.checked || !privacyCheck.checked){
+        errorMsg.textContent = 'נא למלא שם פרטי ושם משפחה, ולסמן את שתי התיבות.';
         errorMsg.classList.add('show');
         return;
       }
@@ -2656,6 +2672,7 @@
       var fullName = first + ' ' + last;
       var messageBody = 'נרשם/ה לאירוע: ' + fullName + '\nאמצעי תשלום שנבחר: ' + payMethod;
       if(notes){ messageBody += '\nבקשה מיוחדת: ' + notes; }
+      messageBody += '\nאישר/ה מדיניות פרטיות ותנאי שימוש: כן';
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
