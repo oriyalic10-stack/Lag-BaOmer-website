@@ -50,10 +50,15 @@
   }catch(e){ document.documentElement.setAttribute('data-theme','night'); }
 })();
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/suez-one-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* גופנים מאוחסנים באתר עצמו (ללא Google Fonts) */
+  @font-face{ font-family:'Heebo'; font-style:normal; font-weight:100 900; font-display:swap; src:url(fonts/heebo-hebrew-wght-normal.woff2) format('woff2'); unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F; }
+  @font-face{ font-family:'Heebo'; font-style:normal; font-weight:100 900; font-display:swap; src:url(fonts/heebo-latin-wght-normal.woff2) format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+  @font-face{ font-family:'Suez One'; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/suez-one-hebrew-400-normal.woff2) format('woff2'); unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F; }
+  @font-face{ font-family:'Suez One'; font-style:normal; font-weight:400; font-display:swap; src:url(fonts/suez-one-latin-400-normal.woff2) format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
   /* ===== iOS "Add to Home Screen" banner (for push notification support) ===== */
   .ios-a2hs{
     position:fixed;
@@ -1567,6 +1572,7 @@
 
         <!-- STEP 2: name form (hidden until parent gate passed) -->
         <div class="gate-box" id="gate-form" style="display:none; border:none; padding:8px 4px;">
+          <div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"><label>אל תסמנו שדה זה <input type="checkbox" id="hp-reg" tabindex="-1" autocomplete="off"></label></div>
           <h3>פרטי הילד/ה</h3>
           <p class="gate-note">נא למלא שם פרטי ושם משפחה, ולבחור כיצד תרצו להמשיך לתשלום.</p>
           <div class="name-fields">
@@ -1658,7 +1664,7 @@
 
         <details class="faq reveal">
           <summary>באילו אמצעים אפשר לשלם?<span class="plus"></span></summary>
-          <div class="faq-a">ניתן לשלם באמצעות PayBox או ביט. לתשלום בביט יש להעביר למספר 054-2101351, ולציין בהערות את שם הילד, שם המשפחה ואת הסיבה - ל"ג בעומר. מי שמעדיף דרך אחרת מוזמן לפנות אלינו בפרטי ונתאם.</div>
+          <div class="faq-a">ניתן לשלם באמצעות PayBox או ביט. לאחר מילוי פרטי הילד/ה בהרשמה יוצגו כפתור התשלום ב-PayBox והמספר לתשלום בביט. בתשלום בביט יש לרשום בהערות את סיבת התשלום: ל"ג בעומר. מי שמעדיף דרך אחרת מוזמן לפנות אלינו בפרטי ונתאם.</div>
         </details>
 
         <details class="faq reveal">
@@ -1746,6 +1752,7 @@
         <div class="contact-form-divider"><span>או מלאו טופס, ונחזור אליכם</span></div>
 
         <div class="gate-box" id="contact-form-box" style="max-width:440px; margin:0 auto; text-align:right;">
+          <div aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"><label>אל תסמנו שדה זה <input type="checkbox" id="hp-contact" tabindex="-1" autocomplete="off"></label></div>
           <div class="name-fields">
             <input type="text" id="cf-fullname" placeholder="שם מלא" autocomplete="name" required>
           </div>
@@ -1838,7 +1845,7 @@
         <div class="faq-overlay-head">
           <h2>מדיניות פרטיות</h2>
         </div>
-        <p class="legal-updated">עודכן לאחרונה: 20.09.2026</p>
+        <p class="legal-updated">עודכן לאחרונה: 30.09.2026</p>
         <p class="legal-summary">האתר נועד למסור מידע על אירוע ל"ג בעומר של שכבה ח' ביישוב ולאפשר הרשמה אליו. הוא מופעל על ידי אורייה ליכטנברג. אנחנו אוספים רק את המידע הדרוש לכך, איננו מוכרים אותו ואיננו משתמשים בו לפרסום.</p>
 
         <h3>איזה מידע נאסף</h3>
@@ -1861,7 +1868,7 @@
         </ul>
 
         <h3>עם מי המידע משותף</h3>
-        <p>הטפסים והאתר פועלים באמצעות שירותים טכניים של צד שלישי: Web3Forms (העברת הטפסים למייל שלנו), OneSignal (התראות), Google (גופנים ומפה מוטמעת) ו-GitHub Pages (אחסון האתר). לשירותים אלה עשויים להיות נתוני חיבור טכניים, כמו כתובת IP, והם כפופים למדיניות הפרטיות שלהם. חלקם פועלים מחוץ לישראל.</p>
+        <p>הטפסים והאתר פועלים באמצעות שירותים טכניים של צד שלישי: Web3Forms (העברת הטפסים למייל שלנו), OneSignal (התראות), Google (מפה מוטמעת) ו-GitHub Pages (אחסון האתר). לשירותים אלה עשויים להיות נתוני חיבור טכניים, כמו כתובת IP, והם כפופים למדיניות הפרטיות שלהם. חלקם פועלים מחוץ לישראל.</p>
         <p><strong>רשימת ששילמו:</strong> לקראת האירוע אנחנו מפרסמים בקבוצות השכבה וההורים רשימת שמות של ילדים שהתשלום שלהם התקבל.</p>
         <p>בקשות מיוחדות, כמו אלרגיות, מיועדות לנו בלבד ולא יפורסמו. מלבד האמור כאן, לא נעביר מידע לאף גורם, אלא אם נידרש לכך על פי דין.</p>
 
@@ -2363,11 +2370,11 @@
       {
         title: "תשלום והרשמה",
         items: [
-          { q: "באילו אמצעים אפשר לשלם?", a: "ניתן לשלם באמצעות PayBox או ביט. לתשלום בביט יש להעביר למספר 054-2101351, ולציין בהערות את שם הילד, שם המשפחה ואת הסיבה - ל\"ג בעומר. מי שמעדיף דרך אחרת מוזמן לפנות אלינו בפרטי ונתאם." },
+          { q: "באילו אמצעים אפשר לשלם?", a: "ניתן לשלם באמצעות PayBox או ביט. לאחר מילוי פרטי הילד/ה בהרשמה יוצגו כפתור התשלום ב-PayBox והמספר לתשלום בביט. בתשלום בביט יש לרשום בהערות את סיבת התשלום: ל\"ג בעומר. מי שמעדיף דרך אחרת מוזמן לפנות אלינו בפרטי ונתאם." },
           { q: "איך אדע שהתשלום התקבל?", a: "בשונה משנה קודמת, השנה לא תיפתח קבוצת וואטסאפ ייעודית לאירוע. לקראת האירוע נפרסם בקבוצות הקיימות (קבוצת השכבה וקבוצת ההורים) עדכון עם רשימת מי שהתשלום שלו התקבל אצלנו. מי שאינו מופיע ברשימה מוזמן לפנות אלינו בפרטי, ונוודא יחד שהכול מוסדר." },
           { q: "שילמנו, אבל בסוף הילד לא יכול להגיע - מה עושים?", a: "אנא פנו אלינו בפרטי, ונשמח לזכות אתכם בהחזר כספי מלא." },
           { q: "מה קורה אם לא הספקתי לשלם עד המועד האחרון (18.05.2027, 20:00)?", a: "אנא פנו אלינו בהקדם בפרטי (052-6305564), ונדאג שתהיו כלולים באירוע בלי בעיה." },
-          { q: "התשלום הוא גם ההרשמה, או שצריך להירשם בנפרד?", a: "התשלום הוא ההרשמה עצמה. אין צורך במילוי טופס נפרד - מרגע שהתשלום מתבצע עם שם הילד/ה ושם המשפחה בהערות, הרישום הושלם." },
+          { q: "התשלום הוא גם ההרשמה, או שצריך להירשם בנפרד?", a: "ההרשמה מתחילה בטופס באתר, שבו ממלאים את שם הילד/ה, ומשם עוברים לתשלום. ההרשמה הושלמה עם קבלת התשלום אצלנו." },
           { q: "שילמתי בטעות פעמיים / סכום לא נכון - מה עושים?", a: "ניתן לפנות אלינו במספר 052-6305564 ונתקן את הכול." }
         ]
       },
@@ -2659,6 +2666,8 @@
     var sendingMsg = document.getElementById('gate-sending-msg');
 
     submitBtn.addEventListener('click', function(){
+      var hpEl = document.getElementById('hp-reg');
+      if((hpEl && hpEl.checked) || performance.now() < 4000){ return; }
       var first = firstNameEl.value.trim();
       var last = lastNameEl.value.trim();
       var notes = document.getElementById('child-notes').value.trim();
@@ -2687,6 +2696,7 @@
           access_key: WEB3FORMS_KEY,
           subject: 'הרשמה חדשה - ל"ג בעומר',
           name: fullName,
+          botcheck: !!(document.getElementById('hp-reg') && document.getElementById('hp-reg').checked),
           message: messageBody
         })
       })
@@ -2754,6 +2764,8 @@
     syncMethodFields();
 
     submitBtn.addEventListener('click', function(){
+      var hpEl = document.getElementById('hp-contact');
+      if((hpEl && hpEl.checked) || performance.now() < 4000){ return; }
       var fullname = fullnameEl.value.trim();
       var subject = subjectEl.value.trim();
       var reason = reasonEl.value.trim();
@@ -2801,6 +2813,7 @@
           access_key: WEB3FORMS_KEY,
           subject: 'פנייה חדשה מהאתר - ' + subject,
           name: fullname,
+          botcheck: !!(document.getElementById('hp-contact') && document.getElementById('hp-contact').checked),
           message: messageBody
         })
       })
