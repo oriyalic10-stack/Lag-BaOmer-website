@@ -14,6 +14,14 @@
   try{
     var t = localStorage.getItem('lagbaomer-theme');
     document.documentElement.setAttribute('data-theme', t === 'day' ? 'day' : 'night');
+    var fs = localStorage.getItem('lagbaomer-fontsize');
+    if(fs && fs !== '0'){ document.documentElement.setAttribute('data-fontsize', fs); }
+    var flags = ['contrast','linespacing','links','dyslexia','motion','grayscale'];
+    var keys = {contrast:'high', linespacing:'on', links:'on', dyslexia:'on', motion:'off', grayscale:'on'};
+    flags.forEach(function(f){
+      var v = localStorage.getItem('lagbaomer-' + f);
+      if(v === keys[f]){ document.documentElement.setAttribute('data-' + f, v); }
+    });
   }catch(e){ document.documentElement.setAttribute('data-theme','night'); }
 })();
 </script>
@@ -52,10 +60,199 @@
   .topbar{ background:var(--bg-page); border-bottom:1px solid var(--line); }
   .topbar .wrap{ max-width:1100px; display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px; }
   .brand{ font-family:'Suez One', serif; font-size:17px; color:var(--ember-text); }
-  .theme-btn{
-    font:inherit; font-size:14px; color:var(--text-main); background:var(--panel);
-    border:1px solid var(--line); border-radius:999px; padding:6px 14px; cursor:pointer;
+
+
+  /* ---------- נגישות (זהה לאתר הראשי) ---------- */
+  html[data-fontsize="-2"] body{ zoom:0.9; }
+  html[data-fontsize="-1"] body{ zoom:0.95; }
+  html[data-fontsize="1"] body{ zoom:1.12; }
+  html[data-fontsize="2"] body{ zoom:1.25; }
+  html[data-fontsize="3"] body{ zoom:1.4; }
+  html[data-fontsize="4"] body{ zoom:1.6; }
+  .top-actions{ display:flex; align-items:center; gap:8px; }
+  .theme-toggle{
+    flex:none;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--panel);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:var(--gold);
+    padding:0;
   }
+  .theme-toggle svg{ width:16px; height:16px; }
+  .theme-toggle .icon-sun{ display:none; }
+  .theme-toggle .icon-moon{ display:block; }
+  html[data-theme="night"] .theme-toggle .icon-sun{ display:block; }
+  html[data-theme="night"] .theme-toggle .icon-moon{ display:none; }
+  .a11y-wrap{ position:relative; flex:none; }
+  .a11y-menu{
+    display:none;
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0;
+    min-width:230px;
+    background:var(--bg-page);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow:0 12px 30px -10px rgba(0,0,0,0.35);
+    padding:12px;
+    z-index:60;
+    text-align:right;
+  }
+  .a11y-menu.open{ display:block; }
+  .a11y-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:6px 2px 10px;
+    font-size:14px;
+    color:var(--text-main);
+  }
+  .a11y-btns{ display:flex; gap:6px; }
+  .a11y-btns button{
+    width:32px; height:32px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    color:var(--text-main);
+    font-family:'Heebo', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .a11y-btns button:hover{ border-color:var(--gold); }
+  .a11y-contrast-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 8px;
+    border-top:1px solid var(--line);
+    background:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    color:var(--text-main);
+    font-family:'Heebo', sans-serif;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+  }
+  .a11y-switch{
+    width:36px; height:20px;
+    border-radius:999px;
+    background:var(--line);
+    position:relative;
+    flex:none;
+    transition:background .15s ease;
+  }
+  .a11y-switch::before{
+    content:'';
+    position:absolute;
+    top:2px; right:2px;
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--text-muted);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .a11y-contrast-btn[aria-pressed="true"] .a11y-switch{ background:var(--ember); }
+  .a11y-contrast-btn[aria-pressed="true"] .a11y-switch::before{
+    transform:translateX(-16px);
+    background:#fff;
+  }
+  .a11y-menu{ max-height:70vh; overflow-y:auto; }
+  .a11y-switch-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 8px;
+    border-top:1px solid var(--line);
+    background:none;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    color:var(--text-main);
+    font-family:'Heebo', sans-serif;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+  }
+  .a11y-switch-btn .a11y-switch{ }
+  .a11y-switch-btn[aria-pressed="true"] .a11y-switch{ background:var(--ember); }
+  .a11y-switch-btn[aria-pressed="true"] .a11y-switch::before{
+    transform:translateX(-16px);
+    background:#fff;
+  }
+  .a11y-speak-btn{
+    width:100%;
+    margin-top:10px;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    color:var(--text-main);
+    font-family:'Heebo', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .a11y-speak-btn:hover{ border-color:var(--gold); }
+  html[data-contrast="high"], html[data-theme="day"][data-contrast="high"]{
+    --bg-page:#ffffff;
+    --bg-hero:#ffffff;
+    --text-main:#000000;
+    --text-muted:#000000;
+    --line:rgba(0,0,0,0.55);
+    --panel:rgba(0,0,0,0.08);
+    --panel-2:rgba(0,0,0,0.05);
+  }
+  html[data-theme="night"][data-contrast="high"]{
+    --bg-page:#000000;
+    --bg-hero:#000000;
+    --text-main:#ffffff;
+    --text-muted:#ffffff;
+    --line:rgba(255,255,255,0.55);
+    --panel:rgba(255,255,255,0.14);
+    --panel-2:rgba(255,255,255,0.08);
+  }
+
+  html[data-linespacing="on"] body{ line-height:2.3; }
+  html[data-linespacing="on"] .lede,
+  html[data-linespacing="on"] .thanks p,
+  html[data-linespacing="on"] .next p{ line-height:2.1; }
+
+  html[data-links="on"] main a,
+  html[data-links="on"] footer a{
+    text-decoration:underline !important; text-underline-offset:3px; font-weight:700 !important;
+  }
+
+  html[data-dyslexia="on"] body,
+  html[data-dyslexia="on"] h1,
+  html[data-dyslexia="on"] h2,
+  html[data-dyslexia="on"] h3,
+  html[data-dyslexia="on"] .brand{
+    font-family:Arial, Helvetica, sans-serif !important;
+    letter-spacing:0.02em;
+  }
+
+  html[data-motion="off"] *,
+  html[data-motion="off"] *::before,
+  html[data-motion="off"] *::after{ animation:none !important; transition:none !important; }
+
+  html[data-grayscale="on"]{ filter:grayscale(1); }
 
   /* ---------- hero ---------- */
   .hero{
@@ -126,8 +323,8 @@
 
 
   footer{ margin-top:64px; padding:30px 0 40px; border-top:1px solid var(--line); text-align:center; color:var(--text-muted); font-size:14px; }
-  footer .names{ margin:0; opacity:.85; }
-  footer .copyright{ margin:4px 0 0; opacity:.65; font-size:12px; }
+  footer .names{ margin:0; }
+  footer .copyright{ margin:4px 0 0; font-size:13px; }
 
 
   @media (prefers-reduced-motion:reduce){
@@ -139,14 +336,67 @@
 </head>
 <body>
 
-<div class="topbar">
+<header class="topbar">
   <div class="wrap">
     <span class="brand">ל"ג בעומר</span>
-    <button class="theme-btn" id="theme-btn" type="button" aria-label="החלפת מצב יום ולילה">מצב יום / לילה</button>
-  </div>
-</div>
+    <div class="top-actions">
+      <button class="theme-toggle" type="button" id="theme-toggle-btn" aria-pressed="false" aria-label="מעבר לתצוגת לילה">
+        <svg aria-hidden="true" class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.5a8.5 8.5 0 0 1-11-11 8.5 8.5 0 1 0 11 11Z"/></svg>
+        <svg aria-hidden="true" class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      </button>
 
-<header class="hero">
+      <div class="a11y-wrap">
+        <button class="theme-toggle" type="button" id="a11y-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-menu" aria-label="תפריט נגישות">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="8" r="1.6" fill="currentColor" stroke="none"/><path d="M6 11c2 .8 4 1.2 6 1.2s4-.4 6-1.2M12 12.2V17M9.5 20l2.5-4 2.5 4"/></svg>
+        </button>
+        <div class="a11y-menu" id="a11y-menu" role="group" aria-label="תפריט נגישות">
+          <div class="a11y-row">
+            <span>גודל טקסט</span>
+            <div class="a11y-btns">
+              <button type="button" id="font-dec" aria-label="הקטנת טקסט">A-</button>
+              <button type="button" id="font-reset" aria-label="איפוס גודל טקסט">100%</button>
+              <button type="button" id="font-inc" aria-label="הגדלת טקסט">A+</button>
+            </div>
+          </div>
+          <button type="button" class="a11y-contrast-btn" id="contrast-btn" aria-pressed="false">
+            ניגודיות גבוהה
+            <span class="a11y-switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="a11y-switch-btn" id="linespacing-btn" aria-pressed="false">
+            ריווח שורות מוגדל
+            <span class="a11y-switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="a11y-switch-btn" id="links-btn" aria-pressed="false">
+            הדגשת קישורים
+            <span class="a11y-switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="a11y-switch-btn" id="dyslexia-btn" aria-pressed="false">
+            גופן ידידותי לדיסלקציה
+            <span class="a11y-switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="a11y-switch-btn" id="motion-btn" aria-pressed="false">
+            עצירת אנימציות
+            <span class="a11y-switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="a11y-switch-btn" id="grayscale-btn" aria-pressed="false">
+            גווני אפור
+            <span class="a11y-switch" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="a11y-speak-btn" id="speak-btn">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M4 9v6h4l5 5V4L8 9H4Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
+            <span id="speak-label">הקראת הדף</span>
+          </button>
+          <button type="button" class="a11y-speak-btn" id="a11y-reset-btn" style="margin-top:8px;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 17v-4h4"/></svg>
+            איפוס כל ההגדרות
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero" aria-label="תודה שהייתם">
   <div class="hero-bg" aria-hidden="true">
     <div class="stars"></div>
     <div class="glow"></div>
@@ -175,7 +425,7 @@
       <li>נתראה בשנה הבאה</li>
     </ul>
   </div>
-</header>
+</section>
 
 <main>
   <div class="wrap">
@@ -207,12 +457,146 @@
 </footer>
 
 <script>
-  document.getElementById('theme-btn').addEventListener('click', function(){
-    var root = document.documentElement;
-    var next = root.getAttribute('data-theme') === 'night' ? 'day' : 'night';
-    root.setAttribute('data-theme', next);
-    try{ localStorage.setItem('lagbaomer-theme', next); }catch(e){}
-  });
+  (function(){
+    var btn = document.getElementById('theme-toggle-btn');
+    function isNight(){ return document.documentElement.getAttribute('data-theme') === 'night'; }
+    function sync(){
+      var night = isNight();
+      btn.setAttribute('aria-pressed', night ? 'true' : 'false');
+      btn.setAttribute('aria-label', night ? 'מעבר לתצוגת יום' : 'מעבר לתצוגת לילה');
+    }
+    sync();
+    btn.addEventListener('click', function(){
+      var next = isNight() ? 'day' : 'night';
+      document.documentElement.setAttribute('data-theme', next);
+      try{ localStorage.setItem('lagbaomer-theme', next); }catch(e){}
+      sync();
+    });
+  })();
+</script>
+<script>
+  (function(){
+    var btn = document.getElementById('a11y-btn');
+    var menu = document.getElementById('a11y-menu');
+    var html = document.documentElement;
+    var levels = ['-2','-1','0','1','2','3','4'];
+    var labels = {'-2':'90%','-1':'95%','0':'100%','1':'112%','2':'125%','3':'140%','4':'160%'};
+    var resetBtn = document.getElementById('font-reset');
+    var contrastBtn = document.getElementById('contrast-btn');
+
+    function currentLevel(){
+      var v = html.getAttribute('data-fontsize');
+      return levels.indexOf(v) === -1 ? '0' : v;
+    }
+    function setLevel(lv){
+      if(lv === '0'){ html.removeAttribute('data-fontsize'); }
+      else{ html.setAttribute('data-fontsize', lv); }
+      try{ localStorage.setItem('lagbaomer-fontsize', lv); }catch(e){}
+      resetBtn.textContent = labels[lv];
+    }
+    resetBtn.textContent = labels[currentLevel()];
+
+    document.getElementById('font-inc').addEventListener('click', function(){
+      var i = levels.indexOf(currentLevel());
+      if(i < levels.length - 1){ setLevel(levels[i+1]); }
+    });
+    document.getElementById('font-dec').addEventListener('click', function(){
+      var i = levels.indexOf(currentLevel());
+      if(i > 0){ setLevel(levels[i-1]); }
+    });
+    resetBtn.addEventListener('click', function(){ setLevel('0'); });
+
+    function syncContrast(){
+      var on = html.getAttribute('data-contrast') === 'high';
+      contrastBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    syncContrast();
+    contrastBtn.addEventListener('click', function(){
+      var on = html.getAttribute('data-contrast') === 'high';
+      if(on){ html.removeAttribute('data-contrast'); try{ localStorage.setItem('lagbaomer-contrast','off'); }catch(e){} }
+      else{ html.setAttribute('data-contrast','high'); try{ localStorage.setItem('lagbaomer-contrast','high'); }catch(e){} }
+      syncContrast();
+    });
+
+    function wireToggle(btnId, attr, onValue, storageKey){
+      var b = document.getElementById(btnId);
+      function sync(){
+        var on = html.getAttribute(attr) === onValue;
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+      sync();
+      b.addEventListener('click', function(){
+        var on = html.getAttribute(attr) === onValue;
+        if(on){
+          html.removeAttribute(attr);
+          try{ localStorage.setItem(storageKey, 'off'); }catch(e){}
+        } else {
+          html.setAttribute(attr, onValue);
+          try{ localStorage.setItem(storageKey, onValue); }catch(e){}
+        }
+        sync();
+      });
+    }
+    wireToggle('linespacing-btn', 'data-linespacing', 'on', 'lagbaomer-linespacing');
+    wireToggle('links-btn', 'data-links', 'on', 'lagbaomer-links');
+    wireToggle('dyslexia-btn', 'data-dyslexia', 'on', 'lagbaomer-dyslexia');
+    wireToggle('motion-btn', 'data-motion', 'off', 'lagbaomer-motion');
+    wireToggle('grayscale-btn', 'data-grayscale', 'on', 'lagbaomer-grayscale');
+
+    var speakBtn = document.getElementById('speak-btn');
+    var speakLabel = document.getElementById('speak-label');
+    var synth = window.speechSynthesis;
+    if(!synth || typeof SpeechSynthesisUtterance === 'undefined'){ speakBtn.style.display = 'none'; }
+
+    function pageText(){
+      var parts = [];
+      document.querySelectorAll('.hero, main, footer').forEach(function(el){ parts.push(el.innerText); });
+      return parts.join('. ').replace(/\s+/g, ' ').trim();
+    }
+    function stopAll(){
+      if(synth){ synth.cancel(); }
+      speakLabel.textContent = 'הקראת הדף';
+    }
+    speakBtn.addEventListener('click', function(){
+      if(!synth){ return; }
+      if(synth.speaking){ stopAll(); return; }
+      var u = new SpeechSynthesisUtterance(pageText());
+      u.lang = 'he-IL';
+      u.rate = 0.95;
+      u.onend = function(){ speakLabel.textContent = 'הקראת הדף'; };
+      u.onerror = function(){ speakLabel.textContent = 'לא ניתן להפעיל את ההקראה כרגע'; };
+      speakLabel.textContent = 'עצירת ההקראה';
+      try{ synth.speak(u); }
+      catch(err){ speakLabel.textContent = 'לא ניתן להפעיל את ההקראה כרגע'; }
+    });
+    window.addEventListener('pagehide', function(){ if(synth){ synth.cancel(); } });
+
+    document.getElementById('a11y-reset-btn').addEventListener('click', function(){
+      stopAll();
+      ['fontsize','contrast','linespacing','links','dyslexia','motion','grayscale'].forEach(function(k){
+        html.removeAttribute('data-' + k);
+        try{ localStorage.removeItem('lagbaomer-' + k); }catch(e){}
+      });
+      resetBtn.textContent = labels['0'];
+      contrastBtn.setAttribute('aria-pressed', 'false');
+      ['linespacing-btn','links-btn','dyslexia-btn','motion-btn','grayscale-btn'].forEach(function(id){
+        document.getElementById(id).setAttribute('aria-pressed', 'false');
+      });
+    });
+
+    function close(){ menu.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', function(e){
+      if(!menu.contains(e.target) && e.target !== btn){ close(); }
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ close(); btn.focus(); }
+    });
+  })();
 </script>
 </body>
 </html>
