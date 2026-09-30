@@ -50,6 +50,28 @@
   }catch(e){ document.documentElement.setAttribute('data-theme','night'); }
 })();
 </script>
+<script>
+/* אחרי האירוע: ב-24.05.2027 בשעה 00:00 (שעון ישראל) האתר עובר לעמוד "תודה שהייתם".
+   לבדיקה מראש אפשר לפתוח את האתר עם ?preview=after בסוף הכתובת. */
+(function(){
+  var AFTER_EVENT = new Date('2027-05-24T00:00:00+03:00').getTime();
+  var forced = /[?&]preview=after(&|$)/.test(location.search);
+  if(forced || Date.now() >= AFTER_EVENT){
+    location.replace('after-event.html');
+  }
+})();
+</script>
+<script>
+/* מצב "ההרשמה נסגרה": עובר אוטומטית ברגע המועד האחרון (18.05.2027, 20:00, שעון ישראל).
+   לבדיקה מראש אפשר לפתוח את האתר עם ?preview=closed בסוף הכתובת. */
+(function(){
+  var DEADLINE = new Date('2027-05-18T20:00:00+03:00').getTime();
+  var forced = /[?&]preview=closed(&|$)/.test(location.search);
+  if(forced || Date.now() >= DEADLINE){
+    document.documentElement.classList.add('reg-closed');
+  }
+})();
+</script>
 <link rel="preload" href="fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/suez-one-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -131,6 +153,29 @@
   }
 
   :root{ --max:760px; }
+
+  /* ---------- הרשמה נסגרה ---------- */
+  .reg-closed-card{
+    display:none; flex-direction:column; align-items:center; text-align:center; gap:6px;
+    padding:34px 24px; border:1px solid var(--line); border-radius:22px; background:var(--panel);
+  }
+  .reg-closed-card svg{ width:34px; height:34px; color:var(--gold); margin-bottom:6px; }
+  .reg-closed-card h3{ font-size:clamp(24px,5vw,30px); color:var(--ember-text); }
+  .reg-closed-card p{ margin:0; color:var(--text-muted); font-size:15px; }
+  .rc-contact{ width:100%; max-width:560px; margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+  .rc-contact p{ color:var(--text-main); font-size:16px; text-wrap:balance; }
+  .rc-actions{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:14px; }
+  .rc-btn{
+    display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; border-radius:999px;
+    text-decoration:none; font-weight:700; font-size:16px; background:var(--ember); color:var(--btn-text); border:1.5px solid var(--ember);
+  }
+  .rc-btn.ghost{ background:transparent; color:var(--text-main); border-color:var(--line); font-weight:600; }
+  html.reg-closed .reg-closed-card{ display:flex; }
+  html.reg-closed #payment .ticket,
+  html.reg-closed #payment .deadline,
+  html.reg-closed .payment-float,
+  html.reg-closed a[href="#payment"],
+  html.reg-closed #payment-modal{ display:none !important; }
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -1526,6 +1571,18 @@
     <section id="payment" class="reveal">
       <div class="wrap">
         <div class="section-head"><span class="dot"></span><h2>הרשמה ותשלום</h2></div>
+
+        <div class="reg-closed-card" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <h3>ההרשמה לאירוע נסגרה</h3>
+          <p>המועד האחרון להרשמה ולתשלום היה יום שלישי, 18.05.2027, בשעה 20:00.</p>
+          <div class="rc-contact">
+            <p>לא הספקתם? פנו אלינו בפרטי ונבדוק אם אפשר לרשום אתכם.</p>
+            <div class="rc-actions">
+              <a class="rc-btn" href="https://wa.me/972526305564?text=%D7%A9%D7%9C%D7%95%D7%9D%21%20%D7%9C%D7%90%20%D7%94%D7%A1%D7%A4%D7%A7%D7%AA%D7%99%20%D7%9C%D7%94%D7%99%D7%A8%D7%A9%D7%9D%20%D7%A2%D7%93%20%D7%94%D7%9E%D7%95%D7%A2%D7%93%20%D7%94%D7%90%D7%97%D7%A8%D7%95%D7%9F%2C%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%90%D7%9D%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%A2%D7%93%D7%99%D7%99%D7%9F%20%D7%9C%D7%A8%D7%A9%D7%95%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%99%D7%9C%D7%93/%D7%94%20%D7%9C%D7%90%D7%99%D7%A8%D7%95%D7%A2." target="_blank" rel="noopener">וואטסאפ</a>
+            </div>
+          </div>
+        </div>
 
         <div class="ticket">
           <div class="ticket-body">
