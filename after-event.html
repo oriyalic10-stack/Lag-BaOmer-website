@@ -302,6 +302,42 @@
   .sub{ text-align:center; color:var(--text-muted); margin:8px auto 28px; max-width:520px; }
 
 
+  /* ---------- טופס משוב ---------- */
+  .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); clip-path:inset(50%); white-space:nowrap; border:0; }
+  .fb{ position:relative; background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:30px 24px; }
+  .fb-intro{ text-align:center; max-width:560px; margin:0 auto 6px; }
+  .fb-intro p{ margin:0; font-size:17px; }
+  .fb-intro p + p{ margin-top:10px; color:var(--text-muted); font-size:15px; }
+  .fb-field{ margin-top:22px; border:0; padding:0; min-width:0; }
+  .fb-field > label, .fb-field > legend{ display:block; padding:0; font-weight:600; margin-bottom:8px; }
+  .fb .opt{ color:var(--text-muted); font-weight:400; font-size:14px; }
+  .fb input[type="text"], .fb textarea{
+    width:100%; font:inherit; color:var(--text-main); background:var(--bg-page);
+    border:1px solid var(--line); border-radius:12px; padding:12px 14px;
+  }
+  .fb textarea{ min-height:160px; resize:vertical; line-height:1.6; }
+  .fb input::placeholder, .fb textarea::placeholder{ color:var(--text-muted); opacity:.9; }
+  .fb input:focus-visible, .fb textarea:focus-visible{ outline:2px solid var(--ember); outline-offset:2px; }
+  .fb-stars{ display:flex; flex-direction:row-reverse; justify-content:center; gap:4px; position:relative; }
+  .fb-stars input{ position:absolute; opacity:0; width:1px; height:1px; pointer-events:none; }
+  .fb-stars label{ font-size:44px; line-height:1; padding:2px 4px; cursor:pointer; color:var(--text-muted); border-radius:10px; transition:color .12s ease, transform .12s ease; }
+  .fb-stars label:hover, .fb-stars label:hover ~ label, .fb-stars input:checked ~ label{ color:var(--gold); }
+  .fb-stars label:hover{ transform:scale(1.12); }
+  .fb-stars input:focus-visible + label{ outline:2px solid var(--ember); outline-offset:2px; }
+  .fb-rate-text{ text-align:center; min-height:1.6em; margin:6px 0 0; color:var(--gold); font-weight:600; }
+  .fb-actions{ text-align:center; margin-top:24px; }
+  .fb-actions .btn{ margin-top:0; }
+  .fb-actions .btn[disabled]{ opacity:.6; cursor:default; }
+  .fb-msg{ text-align:center; margin:14px 0 0; min-height:1.4em; font-size:15px; }
+  .fb-msg.err{ color:var(--ember-text); font-weight:600; }
+  .fb-thanks{ text-align:center; padding:10px 0 6px; }
+  .fb-thanks h3{ font-size:26px; color:var(--gold); }
+  .fb-thanks p{ margin:10px auto 0; max-width:460px; }
+  .fb-privacy{ margin-top:22px; border-top:1px solid var(--line); padding-top:14px; font-size:14px; color:var(--text-muted); }
+  .fb-privacy summary{ cursor:pointer; font-weight:600; color:var(--text-main); }
+  .fb-privacy p{ margin:10px 0 0; line-height:1.7; }
+  .fb-privacy a{ color:var(--ember-text); }
+
   .thanks{
     background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:30px 26px; text-align:center;
   }
@@ -436,6 +472,43 @@
       <div class="thanks">
         <p>תודה מיוחדת ל<b>זוהר זילכה</b>, מייסד המסורת, ולכל מי שעזר להקים, להדליק, לארגן ולנקות.</p>
         <p>תודה גם לכם, ההורים, על האמון ועל הסבלנות. הילדים חזרו הביתה עם ריח עשן וחיוך.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="fb-h">
+      <h2 id="fb-h">ספרו לנו איך היה</h2>
+      <p class="sub">כמה דקות שלכם, והאירוע של שנה הבאה יהיה טוב יותר.</p>
+      <div class="fb">
+        <div aria-hidden="true" style="position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); clip-path:inset(50%); white-space:nowrap; opacity:0; pointer-events:none;"><label>אל תסמנו שדה זה <input type="checkbox" id="fb-hp" tabindex="-1" autocomplete="off"></label></div>
+        <div class="fb-intro">
+          <p>נשמח לשמוע את האמת, <b>כולל מה שלא היה טוב</b>.</p>
+          <p>ביקורת כנה היא מה שעוזר לנו להשתפר. אין תשובה "לא נעימה" מדי, וכל מה שתכתבו יתקבל בתודה. אפשר להשאיר את השם ריק, והמשוב יגיע אלינו בלי שם.</p>
+        </div>
+        <form id="fb-form" novalidate>
+          <div class="fb-field">
+            <label for="fb-name">שם מלא <span class="opt">(לא חובה)</span></label>
+            <input type="text" id="fb-name" maxlength="60" autocomplete="off" aria-label="שם מלא (לא חובה)">
+          </div>
+          <fieldset class="fb-field">
+            <legend>כמה כוכבים היית נותנים לאירוע?</legend>
+            <div class="fb-stars" id="fb-stars"><input type="radio" name="fb-rating" id="fb-r5" value="5"><label for="fb-r5" title="5 כוכבים"><span class="sr-only">5 כוכבים</span><span aria-hidden="true">★</span></label><input type="radio" name="fb-rating" id="fb-r4" value="4"><label for="fb-r4" title="4 כוכבים"><span class="sr-only">4 כוכבים</span><span aria-hidden="true">★</span></label><input type="radio" name="fb-rating" id="fb-r3" value="3"><label for="fb-r3" title="3 כוכבים"><span class="sr-only">3 כוכבים</span><span aria-hidden="true">★</span></label><input type="radio" name="fb-rating" id="fb-r2" value="2"><label for="fb-r2" title="2 כוכבים"><span class="sr-only">2 כוכבים</span><span aria-hidden="true">★</span></label><input type="radio" name="fb-rating" id="fb-r1" value="1"><label for="fb-r1" title="כוכב אחד"><span class="sr-only">כוכב אחד</span><span aria-hidden="true">★</span></label></div>
+            <p class="fb-rate-text" id="fb-rate-text" aria-live="polite"></p>
+          </fieldset>
+          <div class="fb-field">
+            <label for="fb-details">מה היה טוב, ומה לא? <span class="opt">(אפשר לכתוב גם מה הפריע ומה הייתם משנים)</span></label>
+            <textarea id="fb-details" maxlength="3000" rows="6" aria-label="מה היה טוב, ומה לא?" placeholder="מה נהניתם ממנו? מה פחות עבד? משהו שהפריע או היה אפשר לעשות טוב יותר? אל תתביישו להיות ישירים."></textarea>
+          </div>
+          <div class="fb-actions"><button type="submit" class="btn" id="fb-submit">שליחת המשוב</button></div>
+          <p class="fb-msg" id="fb-msg" role="status" aria-live="polite"></p>
+        </form>
+        <div class="fb-thanks" id="fb-thanks" hidden role="status">
+          <h3>תודה רבה!</h3>
+          <p>המשוב התקבל. כל מילה, במיוחד הביקורת, עוזרת לנו להשתפר לשנה הבאה.</p>
+        </div>
+        <details class="fb-privacy">
+          <summary>פרטיות</summary>
+          <p>המשוב (דירוג, טקסט חופשי, ושם אם בחרתם לרשום) נשלח אלינו למייל דרך שירות שליחת טפסים (Web3Forms). אם לא תכתבו שם, המשוב יגיע בלי שם, אך מידע טכני כמו כתובת IP עשוי להיות מעובד על ידי השירות. אנחנו משתמשים במשוב רק כדי להשתפר לשנה הבאה, ולא נפרסם אותו בשמכם. הטופס מיועד להורים, וילדים מוזמנים למלא אותו יחד עם הורה. לבקשת מחיקה: וואטסאפ 052-6305564 או oriyalic10@gmail.com.</p>
+        </details>
       </div>
     </section>
 
@@ -595,6 +668,78 @@
     });
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape'){ close(); btn.focus(); }
+    });
+  })();
+</script>
+<script>
+  /* טופס משוב: נשלח למייל דרך Web3Forms, כמו טפסי האתר הרגיל */
+  (function(){
+    var WEB3FORMS_KEY = 'd2438382-ef05-4637-9f11-773c91297652';
+    var form = document.getElementById('fb-form');
+    var nameEl = document.getElementById('fb-name');
+    var detailsEl = document.getElementById('fb-details');
+    var btn = document.getElementById('fb-submit');
+    var msg = document.getElementById('fb-msg');
+    var thanks = document.getElementById('fb-thanks');
+    var hp = document.getElementById('fb-hp');
+    var rateText = document.getElementById('fb-rate-text');
+    var labels = { '1':'לא טוב', '2':'פחות טוב', '3':'בסדר', '4':'טוב', '5':'מצוין' };
+
+    function rating(){
+      var c = form.querySelector('input[name="fb-rating"]:checked');
+      return c ? c.value : '';
+    }
+    form.addEventListener('change', function(e){
+      if(e.target && e.target.name === 'fb-rating'){ rateText.textContent = labels[e.target.value]; msg.textContent = ''; msg.className = 'fb-msg'; }
+    });
+    function fail(text){ msg.textContent = text; msg.className = 'fb-msg err'; }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if((hp && hp.checked) || performance.now() < 4000){ return; }
+      var r = rating();
+      var details = detailsEl.value.trim();
+      var name = nameEl.value.trim();
+      if(!r){ fail('נא לבחור דירוג בכוכבים.'); return; }
+      if(details.length < 3){ fail('נא לכתוב כמה מילים על איך היה, גם ביקורת מתקבלת בברכה.'); return; }
+
+      msg.className = 'fb-msg'; msg.textContent = 'שולח...';
+      btn.disabled = true;
+      var stars = '';
+      for(var i = 1; i <= 5; i++){ stars += (i <= Number(r)) ? '★' : '☆'; }
+      var body = 'משוב על ל"ג בעומר\n' +
+                 'דירוג: ' + r + ' מתוך 5 ' + stars + '\n' +
+                 'שם: ' + (name || '(לא נמסר, משוב אנונימי)') + '\n\n' +
+                 'מה היה טוב ומה לא:\n' + details;
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'משוב על ל"ג בעומר - ' + r + ' כוכבים',
+          from_name: 'טופס משוב באתר',
+          name: name || 'אנונימי',
+          rating: r,
+          botcheck: !!(hp && hp.checked),
+          message: body
+        })
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if(data && data.success){
+          form.hidden = true;
+          thanks.hidden = false;
+          thanks.scrollIntoView({ block:'nearest' });
+        }else{
+          fail('משהו השתבש בשליחה. אפשר לנסות שוב.');
+          btn.disabled = false;
+        }
+      })
+      .catch(function(){
+        fail('משהו השתבש בשליחה. בדקו את החיבור ונסו שוב.');
+        btn.disabled = false;
+      });
     });
   })();
 </script>
