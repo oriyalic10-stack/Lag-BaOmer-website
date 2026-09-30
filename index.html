@@ -51,25 +51,34 @@
 })();
 </script>
 <script>
-/* אחרי האירוע: ב-24.05.2027 בשעה 00:00 (שעון ישראל) האתר עובר לעמוד "תודה שהייתם".
-   לבדיקה מראש אפשר לפתוח את האתר עם ?preview=after בסוף הכתובת. */
+/* שערי זמן (שעון ישראל):
+   18.05.2027 20:00 - ההרשמה והתשלום נסגרים.
+   24.05.2027 00:00 - האתר עובר לעמוד "תודה שהייתם".
+   הבדיקה רצה בטעינה, כל 30 שניות, ובחזרה לדף (למשל בכפתור "אחורה").
+   לבדיקה מראש: ?preview=closed או ?preview=after בסוף הכתובת. */
 (function(){
+  var DEADLINE    = new Date('2027-05-18T20:00:00+03:00').getTime();
   var AFTER_EVENT = new Date('2027-05-24T00:00:00+03:00').getTime();
-  var forced = /[?&]preview=after(&|$)/.test(location.search);
-  if(forced || Date.now() >= AFTER_EVENT){
-    location.replace('after-event.html');
+  var forceAfter  = /[?&]preview=after(&|$)/.test(location.search);
+  var forceClosed = /[?&]preview=closed(&|$)/.test(location.search);
+  function check(){
+    var now = Date.now();
+    if(forceAfter || now >= AFTER_EVENT){ location.replace('after-event.html'); return; }
+    if(forceClosed || now >= DEADLINE){
+      var root = document.documentElement;
+      if(!root.classList.contains('reg-closed')){
+        root.classList.add('reg-closed');
+        var m = document.getElementById('payment-modal');
+        if(m && m.classList.contains('open')){
+          m.classList.remove('open');
+          if(document.body){ document.body.style.overflow = ''; }
+        }
+      }
+    }
   }
-})();
-</script>
-<script>
-/* מצב "ההרשמה נסגרה": עובר אוטומטית ברגע המועד האחרון (18.05.2027, 20:00, שעון ישראל).
-   לבדיקה מראש אפשר לפתוח את האתר עם ?preview=closed בסוף הכתובת. */
-(function(){
-  var DEADLINE = new Date('2027-05-18T20:00:00+03:00').getTime();
-  var forced = /[?&]preview=closed(&|$)/.test(location.search);
-  if(forced || Date.now() >= DEADLINE){
-    document.documentElement.classList.add('reg-closed');
-  }
+  check();
+  setInterval(check, 30000);
+  window.addEventListener('pageshow', function(e){ if(e.persisted){ check(); } });
 })();
 </script>
 <link rel="preload" href="fonts/heebo-hebrew-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
