@@ -1637,8 +1637,8 @@
           <h3>פרטי הילד/ה</h3>
           <p class="gate-note">נא למלא שם פרטי ושם משפחה, ולבחור כיצד תרצו להמשיך לתשלום.</p>
           <div class="name-fields">
-            <input type="text" id="child-first-name" placeholder="שם פרטי" autocomplete="given-name" required>
-            <input type="text" id="child-last-name" placeholder="שם משפחה" autocomplete="family-name" required>
+            <input type="text" id="child-first-name" aria-label="שם פרטי" placeholder="שם פרטי" autocomplete="off" required>
+            <input type="text" id="child-last-name" aria-label="שם משפחה" placeholder="שם משפחה" autocomplete="off" required>
           </div>
 
           <div class="pay-method-group" role="radiogroup" aria-label="אמצעי תשלום מועדף">
@@ -1652,7 +1652,7 @@
             </label>
           </div>
 
-          <textarea id="child-notes" class="notes-field" placeholder="בקשות מיוחדות - אלרגיה, צורך מיוחד וכדומה (לא חובה)" rows="2"></textarea>
+          <textarea autocomplete="off" id="child-notes" aria-label="בקשות מיוחדות - אלרגיה, צורך מיוחד וכדומה (לא חובה)" class="notes-field" placeholder="בקשות מיוחדות - אלרגיה, צורך מיוחד וכדומה (לא חובה)" rows="2"></textarea>
 
           <label class="gate-check">
             <input type="checkbox" id="privacy-consent-check">
@@ -1770,7 +1770,7 @@
             הדפדפן שלכם לא תומך בנגן אודיו מוטמע.
           </audio>
           <p id="story-audio-error" style="display:none; color:var(--ember-text, #b8481a); font-size:13px; margin:10px 0 0;">
-            לא הצלחנו לטעון את קובץ השמע. ודאו ש-story-podcast.m4a נמצא באותה תיקייה בדיוק כמו קובץ ה-HTML, עם השם הזה במדויק.
+            לא הצלחנו לטעון את ההקלטה. נסו לרענן את הדף, ואם זה לא עוזר, נסו שוב מאוחר יותר.
           </p>
           <script>
             document.getElementById('story-audio').addEventListener('error', function(){
@@ -1811,12 +1811,12 @@
         <div class="gate-box" id="contact-form-box" style="max-width:440px; margin:0 auto; text-align:right;">
           <div aria-hidden="true" style="position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); clip-path:inset(50%); white-space:nowrap; opacity:0; pointer-events:none;"><label>אל תסמנו שדה זה <input type="checkbox" id="hp-contact" tabindex="-1" autocomplete="off"></label></div>
           <div class="name-fields">
-            <input type="text" id="cf-fullname" placeholder="שם מלא" autocomplete="name" required>
+            <input type="text" id="cf-fullname" aria-label="שם מלא" placeholder="שם מלא" autocomplete="name" required>
           </div>
           <div class="name-fields">
-            <input type="text" id="cf-subject" placeholder="כותרת / נושא" required>
+            <input type="text" id="cf-subject" aria-label="כותרת / נושא" placeholder="כותרת / נושא" required>
           </div>
-          <textarea id="cf-reason" class="notes-field" placeholder="סיבת הפנייה (פירוט)" rows="3" required></textarea>
+          <textarea id="cf-reason" aria-label="סיבת הפנייה (פירוט)" class="notes-field" placeholder="סיבת הפנייה (פירוט)" rows="3" required></textarea>
 
           <div class="pay-method-group" role="radiogroup" aria-label="איך לחזור אליכם">
             <label class="pay-method-opt">
@@ -1830,8 +1830,8 @@
           </div>
 
           <div class="name-fields">
-            <input type="tel" id="cf-phone" placeholder="מספר טלפון" autocomplete="tel" dir="rtl" style="text-align:right;" required>
-            <input type="email" id="cf-email" placeholder="כתובת מייל" autocomplete="email" style="display:none;">
+            <input type="tel" id="cf-phone" aria-label="מספר טלפון" placeholder="מספר טלפון" autocomplete="tel" dir="rtl" style="text-align:right;" required>
+            <input type="email" id="cf-email" aria-label="כתובת מייל" placeholder="כתובת מייל" autocomplete="email" style="display:none;">
           </div>
 
           <div class="gate-error" id="cf-error-msg">נא למלא את כל השדות.</div>
@@ -2226,7 +2226,7 @@
     <span aria-hidden="true">💰</span>
   </a>
 
-  <div id="print-poster"><img src="print-poster.jpg" alt="הזמנה לאירוע ל"ג בעומר - שנה שישית למסורת"></div>  <script>
+  <div id="print-poster"><img src="print-poster.jpg" alt="הזמנה לאירוע ל&quot;ג בעומר - שנה שישית למסורת"></div>  <script>
   document.getElementById('print-btn').addEventListener('click', function(){
     window.print();
   });
