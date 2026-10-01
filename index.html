@@ -1441,6 +1441,7 @@
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 17v-4h4"/></svg>
             איפוס כל ההגדרות
           </button>
+          <button type="button" class="a11y-speak-btn" data-legal-open="accessibility-statement" style="margin-top:8px;">הצהרת נגישות</button>
         </div>
       </div>
     </div>
@@ -1900,7 +1901,7 @@
     </div>
   </div>
 
-  <div class="faq-overlay" id="legal-overlay" role="dialog" aria-modal="true" aria-label="מדיניות פרטיות ותנאי שימוש">
+  <div class="faq-overlay" id="legal-overlay" role="dialog" aria-modal="true" aria-label="מדיניות פרטיות, תנאי שימוש והצהרת נגישות">
     <div class="faq-overlay-inner">
       <button type="button" class="faq-back-link" id="legal-overlay-close">
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1910,6 +1911,7 @@
       <div class="legal-tabs">
         <button type="button" class="legal-tab" data-legal-tab="privacy-policy" aria-pressed="true">מדיניות פרטיות</button>
         <button type="button" class="legal-tab" data-legal-tab="terms-of-use" aria-pressed="false">תנאי שימוש</button>
+        <button type="button" class="legal-tab" data-legal-tab="accessibility-statement" aria-pressed="false">הצהרת נגישות</button>
       </div>
 
       <!-- ===== privacy policy ===== -->
@@ -1924,7 +1926,7 @@
         <ul>
           <li><strong>הרשמה לאירוע</strong> (באזור המיועד להורים): שם פרטי ושם משפחה של הילד/ה, אמצעי התשלום שבחרתם, ובקשות מיוחדות אם בחרתם למלא, למשל אלרגיה או צורך מיוחד. מידע כזה עשוי להיות רגיש, ומסירתו היא לפי בחירתכם בלבד. מילוי השדה מהווה הסכמה שנשתמש בו כדי להיערך לצורך.</li>
           <li><strong>טופס יצירת קשר:</strong> שם מלא, נושא ותיאור הפנייה, ומספר טלפון או כתובת מייל, לפי הדרך שבחרתם שנחזור אליכם.</li>
-          <li><strong>משוב אחרי האירוע (לא חובה):</strong> דירוג בכוכבים, טקסט חופשי ושם אם בחרתם לרשום. אפשר להשאיר את השם ריק. הטופס מיועד להורים, וילדים מוזמנים למלא אותו יחד עם הורה.</li>
+          <li><strong>משוב אחרי האירוע (לא חובה):</strong> דירוג בכוכבים, טקסט חופשי ושם אם בחרתם לרשום. אפשר להשאיר את השם ריק. טופס המשוב פתוח לכולם.</li>
           <li><strong>התראות (לא חובה):</strong> אם תאשרו קבלת התראות בדפדפן, יישמר מזהה טכני של המכשיר אצל ספק שירות ההתראות, כדי שנוכל לשלוח עדכונים על האירוע. אפשר לבטל בכל עת בהגדרות הדפדפן.</li>
           <li><strong>העדפות תצוגה:</strong> בחירות כמו מצב יום/לילה וגודל טקסט נשמרות רק במכשיר שלכם, ואינן נשלחות אלינו.</li>
           <li><strong>תשלום:</strong> התשלום מתבצע ב-PayBox או בביט, ולא באתר. האתר אינו מקבל ואינו שומר פרטי אשראי או פרטי חשבון בנק.</li>
@@ -1950,7 +1952,7 @@
         <p>לאחר סיום האירוע וסגירת ענייני התשלום וההחזרים, איננו משתמשים עוד במידע שנאסף בהרשמה ובפניות ואיננו עושים בו כל פעולה. המידע נשמר אצלנו. משוב שנמסר בטופס המשוב אחרי האירוע נשמר וישמש אותנו לשיפור האירוע בשנים הבאות, ולא יפורסם בשמכם.</p>
 
         <h3>ילדים</h3>
-        <p>האתר מיועד להורים. ההרשמה והתשלום מתבצעים על ידי הורה בלבד. פרטים על הילדים נאספים מההורים בלבד, ולא מהילדים ישירות.</p>
+        <p>ההרשמה והתשלום מיועדים להורים בלבד ומתבצעים על ידי הורה. שאר חלקי האתר, כולל טופס המשוב, פתוחים לכולם, גם לילדים. פרטים על הילדים לצורך ההרשמה נאספים מההורים בלבד, ולא מהילדים ישירות. ילדים שמוסרים משוב מוזמנים להשאיר את השם ריק.</p>
 
         <h3>אבטחה</h3>
         <p>הטפסים נשלחים בחיבור מוצפן (HTTPS) ואנחנו נוקטים אמצעים סבירים להגנה על המידע. עם זאת, אין שיטה שמבטיחה אבטחה מלאה.</p>
@@ -2016,6 +2018,49 @@
         <h3>יצירת קשר</h3>
         <p>וואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או מייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>. מידע על איסוף ושימוש בפרטים אישיים מופיע ב<a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות הפרטיות</a>.</p>
       </article>
+
+      <!-- ===== accessibility statement ===== -->
+      <article class="legal-doc" id="legal-doc-accessibility">
+        <div class="faq-overlay-head">
+          <h2>הצהרת נגישות</h2>
+        </div>
+        <p class="legal-updated">עודכן לאחרונה: 01.10.2026</p>
+
+        <h3>המחויבות שלנו</h3>
+        <p>אתר אירוע ל"ג בעומר מופעל על ידי אורייה ליכטנברג. אנחנו רוצים שהאתר יהיה שמיש ונוח לכמה שיותר אנשים, כולל אנשים עם מוגבלות, ועושים מאמץ סביר להתאים אותו לצרכים שונים.</p>
+
+        <h3>איך אפשר להתאים את האתר</h3>
+        <p>בתפריט הנגישות (האייקון בראש הדף) אפשר:</p>
+        <ul>
+          <li>להגדיל ולהקטין את הטקסט.</li>
+          <li>להפעיל ניגודיות גבוהה, ריווח שורות מוגדל והדגשת קישורים.</li>
+          <li>לעבור לגופן ידידותי לדיסלקציה.</li>
+          <li>לעצור אנימציות, ולהציג את האתר בגווני אפור.</li>
+          <li>לבחור מצב תצוגה: לילה, יום או אוטומטי לפי שעות היום.</li>
+          <li>להפעיל הקראה של הדף. באתר הראשי מדובר בהקלטה, ובעמוד שאחרי האירוע בקול של המכשיר, שאיכותו תלויה בו.</li>
+        </ul>
+        <p>ההגדרות נשמרות רק בדפדפן שלכם, ואינן נשלחות אלינו.</p>
+
+        <h3>מה עוד עשינו</h3>
+        <ul>
+          <li>האתר מותאם לטלפון ולמחשב, ולכיוון קריאה מימין לשמאל.</li>
+          <li>אפשר לנווט בו עם מקלדת, ויש קישור דילוג לתוכן הראשי.</li>
+          <li>בנינו אותו כך שיתמוך בקוראי מסך: מבנה כותרות, תוויות לשדות ולכפתורים, ותיאורים טקסטואליים לתמונות.</li>
+          <li>האתר מכבד את הגדרת המכשיר להפחתת תנועה.</li>
+        </ul>
+
+        <h3>תקן ומגבלות</h3>
+        <p>אנחנו שואפים לעמוד בתקן הישראלי לנגישות אתרי אינטרנט (ת"י 5568) ובהנחיות WCAG ברמת AA. האתר לא נבדק על ידי מומחה נגישות. בדקנו אותו בכלי בדיקה אוטומטיים ובבדיקות ידניות בלבד, ולכן ייתכן שנשארו בו בעיות.</p>
+        <p>מגבלות שאנחנו מכירים:</p>
+        <ul>
+          <li>להקלטת "הסיפור שלנו" אין תמלול כתוב.</li>
+          <li>המפה המוטמעת של גוגל עשויה להיות לא נוחה לשימוש עם קורא מסך. הכתובת מופיעה גם בטקסט, וכפתורי הניווט ב-Waze וב-Google Maps הם חלופה.</li>
+          <li>שירותים חיצוניים שאליהם האתר מפנה, כמו PayBox, ביט, וואטסאפ, Waze וגוגל מפות, אינם בשליטתנו, ונגישותם אינה באחריותנו.</li>
+        </ul>
+
+        <h3>נתקלתם בבעיה? פנו אלינו</h3>
+        <p>רכז הנגישות: אורייה ליכטנברג. אפשר לפנות בוואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או במייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>, ונשתדל לטפל בפנייה בהקדם האפשרי. כדאי לציין באיזה עמוד ובאיזה מכשיר או דפדפן הייתה הבעיה.</p>
+      </article>
     </div>
   </div>
 
@@ -2027,6 +2072,7 @@
       <nav class="legal-links" aria-label="מידע משפטי">
         <a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות פרטיות</a>
         <a href="#terms-of-use" data-legal-open="terms-of-use">תנאי שימוש</a>
+        <a href="#accessibility-statement" data-legal-open="accessibility-statement">הצהרת נגישות</a>
       </nav>
     </div>
   </footer>
@@ -2580,7 +2626,8 @@
     var closeBtn = document.getElementById('legal-overlay-close');
     var docs = {
       'privacy-policy': document.getElementById('legal-doc-privacy'),
-      'terms-of-use': document.getElementById('legal-doc-terms')
+      'terms-of-use': document.getElementById('legal-doc-terms'),
+      'accessibility-statement': document.getElementById('legal-doc-accessibility')
     };
     var tabs = overlay.querySelectorAll('.legal-tab');
     var lastFocused = null;
@@ -2616,6 +2663,8 @@
       var trigger = e.target.closest ? e.target.closest('[data-legal-open]') : null;
       if(!trigger){ return; }
       e.preventDefault();
+      var menuEl = document.getElementById('a11y-menu');
+      if(menuEl && menuEl.contains(trigger)){ menuEl.classList.remove('open'); var mb = document.getElementById('a11y-btn'); if(mb){ mb.setAttribute('aria-expanded','false'); } }
       open(trigger.getAttribute('data-legal-open'));
     });
     for(var i=0;i<tabs.length;i++){

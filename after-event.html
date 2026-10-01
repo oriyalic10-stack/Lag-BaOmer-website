@@ -265,6 +265,47 @@
 
   html[data-grayscale="on"]{ filter:grayscale(1); }
 
+  /* ---------- הצהרת נגישות ---------- */
+  footer .legal-links{ margin-top:14px; display:flex; justify-content:center; flex-wrap:wrap; gap:0 22px; }
+  footer .legal-links a{ color:var(--text-muted); font-size:13px; text-decoration:underline; text-underline-offset:3px; }
+  footer .legal-links a:hover{ color:var(--text-main); }
+  .skip-link{ position:absolute; right:16px; top:-60px; background:var(--ember); color:#2a1206; padding:10px 18px; border-radius:8px; font-weight:600; text-decoration:none; z-index:200; transition:top .15s ease; }
+  .skip-link:focus{ top:16px; }
+  .doc-overlay{ position:fixed; inset:0; z-index:150; background:var(--bg-page); overflow-y:auto; display:none; }
+  .doc-overlay.open{ display:block; }
+  .doc-inner{ max-width:760px; margin:0 auto; padding:18px 24px 60px; }
+  .doc-back{ display:inline-flex; align-items:center; gap:6px; background:none; border:0; color:var(--text-muted); font:inherit; font-size:15px; cursor:pointer; padding:8px 0; }
+  .doc-back:hover{ color:var(--text-main); }
+  .doc-back svg{ width:16px; height:16px; }
+  .faq-overlay-head{ text-align:center; padding:14px 0 24px; }
+  .faq-overlay-head h2{ font-family:'Suez One', serif; font-weight:400; font-size:26px; color:var(--ember-text); }
+  .legal-tabs{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; padding:14px 0 4px; }
+  .legal-tab{
+    font-family:'Heebo', sans-serif; font-size:14px; font-weight:600;
+    color:var(--text-muted); background:none;
+    border:1px solid var(--line); border-radius:999px;
+    padding:9px 20px; cursor:pointer;
+  }
+  .legal-tab:hover{ color:var(--text-main); border-color:var(--gold); }
+  .legal-tab[aria-pressed="true"]{ color:var(--btn-text); background:var(--ember); border-color:var(--ember); }
+  .legal-doc{ display:none; }
+  .legal-doc.show{ display:block; }
+  .legal-doc .faq-overlay-head{ padding-bottom:14px; }
+  .legal-updated{ color:var(--text-muted); font-size:13px; text-align:center; margin:0 0 18px; }
+  .legal-summary{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; font-size:15px; line-height:1.8; margin:0 0 6px;
+  }
+  .legal-doc h3{
+    font-family:'Suez One', serif; font-weight:400; font-size:19px;
+    color:var(--text-main); margin:28px 0 8px;
+  }
+  .legal-doc p, .legal-doc li{ font-size:15px; line-height:1.85; color:var(--text-main); }
+  .legal-doc p{ margin:0 0 10px; }
+  .legal-doc ul{ margin:0 0 10px; padding:0 22px 0 0; }
+  .legal-doc li{ margin-bottom:6px; }
+  .legal-doc a{ color:var(--ember-text); }
+
   /* ---------- hero ---------- */
   .hero{
     position:relative; text-align:center; padding:56px 0 84px; border-bottom:1px solid var(--line);
@@ -385,6 +426,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">דילוג לתוכן העמוד</a>
+
 <header class="topbar">
   <div class="wrap">
     <span class="brand">ל"ג בעומר</span>
@@ -443,6 +486,7 @@
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 17v-4h4"/></svg>
             איפוס כל ההגדרות
           </button>
+          <button type="button" class="a11y-speak-btn" data-legal-open="accessibility-statement" style="margin-top:8px;">הצהרת נגישות</button>
         </div>
       </div>
     </div>
@@ -480,7 +524,7 @@
   </div>
 </section>
 
-<main>
+<main id="main-content">
   <div class="wrap">
 
     <section aria-labelledby="thx-h">
@@ -524,7 +568,7 @@
         </div>
         <details class="fb-privacy">
           <summary>פרטיות</summary>
-          <p>המשוב (דירוג, טקסט חופשי, ושם אם בחרתם לרשום) נשלח אלינו למייל דרך שירות שליחת טפסים (Web3Forms). אם לא תכתבו שם, המשוב יגיע בלי שם, אך מידע טכני כמו כתובת IP עשוי להיות מעובד על ידי השירות. אנחנו משתמשים במשוב רק כדי להשתפר לשנה הבאה, ולא נפרסם אותו בשמכם. הטופס מיועד להורים, וילדים מוזמנים למלא אותו יחד עם הורה. לבקשת מחיקה: וואטסאפ 052-6305564 או oriyalic10@gmail.com.</p>
+          <p>המשוב (דירוג, טקסט חופשי, ושם אם בחרתם לרשום) נשלח אלינו למייל דרך שירות שליחת טפסים (Web3Forms). אם לא תכתבו שם, המשוב יגיע בלי שם, אך מידע טכני כמו כתובת IP עשוי להיות מעובד על ידי השירות. אנחנו משתמשים במשוב רק כדי להשתפר לשנה הבאה, ולא נפרסם אותו בשמכם. הטופס פתוח לכולם. לבקשת מחיקה: וואטסאפ 052-6305564 או oriyalic10@gmail.com. הפרטים המלאים ב<a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות הפרטיות</a>.</p>
         </details>
       </div>
     </section>
@@ -543,6 +587,11 @@
   <div class="wrap">
     <p class="names">מייסד: זוהר זילכה · הפקה ופיתוח: אורייה ליכטנברג</p>
     <p class="copyright">© 2026 אורייה ליכטנברג · כל הזכויות שמורות</p>
+    <nav class="legal-links" aria-label="מידע משפטי">
+      <a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות פרטיות</a>
+      <a href="#terms-of-use" data-legal-open="terms-of-use">תנאי שימוש</a>
+      <a href="#accessibility-statement" data-legal-open="accessibility-statement">הצהרת נגישות</a>
+    </nav>
   </div>
 </footer>
 
@@ -797,6 +846,216 @@
         btn.disabled = false;
       });
     });
+  })();
+</script>
+<div class="doc-overlay" id="legal-overlay" role="dialog" aria-modal="true" aria-label="מדיניות פרטיות, תנאי שימוש והצהרת נגישות">
+  <div class="doc-inner">
+    <button type="button" class="doc-back" id="legal-overlay-close">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+      חזרה לעמוד
+    </button>
+
+    <div class="legal-tabs">
+      <button type="button" class="legal-tab" data-legal-tab="privacy-policy" aria-pressed="true">מדיניות פרטיות</button>
+      <button type="button" class="legal-tab" data-legal-tab="terms-of-use" aria-pressed="false">תנאי שימוש</button>
+      <button type="button" class="legal-tab" data-legal-tab="accessibility-statement" aria-pressed="false">הצהרת נגישות</button>
+    </div>
+
+    <article class="legal-doc show" id="legal-doc-privacy">
+        <div class="faq-overlay-head">
+          <h2>מדיניות פרטיות</h2>
+        </div>
+        <p class="legal-updated">עודכן לאחרונה: 01.10.2026</p>
+        <p class="legal-summary">העמוד הזה מודה למשתתפי אירוע ל"ג בעומר של שכבה ח' ביישוב ומאפשר לשלוח משוב. הוא מופעל על ידי אורייה ליכטנברג. אנחנו אוספים רק את המידע שתבחרו למסור בטופס המשוב, איננו מוכרים אותו ואיננו משתמשים בו לפרסום.</p>
+
+        <h3>איזה מידע נאסף</h3>
+        <ul>
+          <li><strong>משוב (לא חובה):</strong> דירוג בכוכבים, טקסט חופשי, ושם אם בחרתם לרשום. אפשר להשאיר את השם ריק, והמשוב יגיע אלינו בלי שם. נבקש לא לכתוב במשוב שמות או פרטים מזהים של ילדים או של אנשים אחרים.</li>
+          <li><strong>פנייה אלינו:</strong> אם תכתבו לנו בוואטסאפ או במייל, נראה את הפרטים שתמסרו, כמו מספר טלפון או כתובת מייל, ונשתמש בהם כדי לענות.</li>
+          <li><strong>העדפות תצוגה:</strong> בחירות כמו מצב לילה או יום וגודל טקסט נשמרות רק במכשיר שלכם, ואינן נשלחות אלינו.</li>
+          <li><strong>מידע טכני:</strong> כתובת IP וסוג הדפדפן עשויים להיות מעובדים על ידי שירותי האחסון והטפסים שמפורטים בהמשך.</li>
+          <li><strong>מידע מההרשמה לאירוע:</strong> נאסף בעבר, בתקופת ההרשמה, ואינו נאסף עוד. הפרטים בסעיף "מידע מההרשמה לאירוע" בהמשך.</li>
+        </ul>
+
+        <p>מסירת משוב אינה חובה על פי דין ואינה תנאי לשום דבר.</p>
+
+        <h3>למה אנחנו משתמשים במידע</h3>
+        <ul>
+          <li>ללמוד מהמשוב ולשפר את האירוע בשנים הבאות.</li>
+          <li>לענות לפניות ולבקשות לעיין במידע, לתקן אותו או למחוק אותו.</li>
+        </ul>
+
+        <h3>עם מי המידע משותף</h3>
+        <p>העמוד פועל באמצעות שירותים טכניים של צד שלישי: Web3Forms (העברת טופס המשוב למייל שלנו) ו-GitHub Pages (אחסון האתר). לשירותים אלה עשויים להיות נתוני חיבור טכניים, כמו כתובת IP, והם כפופים למדיניות הפרטיות שלהם. חלקם פועלים מחוץ לישראל.</p>
+        <p>משוב מיועד לנו בלבד ולא יפורסם בשמכם. מלבד האמור כאן, לא נעביר מידע לאף גורם, אלא אם נידרש לכך על פי דין.</p>
+
+        <h3>שמירת המידע</h3>
+        <p>משוב שנמסר בטופס נשמר וישמש אותנו לשיפור האירוע בשנים הבאות. אפשר לבקש למחוק משוב. אם כתבתם שם, נאתר אותו לפי השם. משוב אנונימי קשה לאתר, ולכן ייתכן שלא נוכל למחוק אותו, אלא אם תתארו לנו אותו מספיק כדי שנזהה אותו.</p>
+
+        <h3>מידע מההרשמה לאירוע</h3>
+        <p>בתקופת ההרשמה נאסף באתר מידע על ההרשמה: שם פרטי ושם משפחה של הילד/ה, אמצעי התשלום שנבחר, ובקשות מיוחדות כמו אלרגיה או צורך מיוחד, וכן פרטי הפנייה בטופס יצירת קשר. מי שאישר התראות בדפדפן קיבל גם מזהה טכני של המכשיר אצל ספק שירות ההתראות. מידע זה כבר אינו נאסף.</p>
+        <p>לאחר סיום האירוע וסגירת ענייני התשלום וההחזרים, איננו משתמשים עוד במידע הזה ואיננו עושים בו כל פעולה. המידע נשמר אצלנו, ואפשר לבקש לעיין בו או למחוק אותו. מי שאישר התראות יכול לבטל אותן בכל עת בהגדרות הדפדפן.</p>
+
+        <h3>ילדים</h3>
+        <p>ההרשמה והתשלום לאירוע, שהסתיימו, היו מיועדים להורים בלבד. העמוד הזה, כולל טופס המשוב, פתוח לכולם, גם לילדים. ילדים שמוסרים משוב מוזמנים להשאיר את השם ריק. בטופס המשוב איננו מבקשים פרטים מזהים על ילדים, ואנחנו מבקשים לא לכתוב בו שמות או פרטים מזהים של ילדים.</p>
+
+        <h3>אבטחה</h3>
+        <p>הטפסים נשלחים בחיבור מוצפן (HTTPS) ואנחנו נוקטים אמצעים סבירים להגנה על המידע. עם זאת, אין שיטה שמבטיחה אבטחה מלאה.</p>
+
+        <h3>עוגיות ואחסון מקומי</h3>
+        <p>העמוד אינו משתמש בעוגיות לפרסום או למעקב, ואינו מטמיע מפות, התראות או גופנים של צד שלישי. העדפות תצוגה נשמרות רק במכשיר שלכם.</p>
+
+        <h3>הזכויות שלכם</h3>
+        <p>לפי חוק הגנת הפרטיות, התשמ"א-1981, אתם רשאים לבקש לעיין במידע שנשמר עליכם ועל ילדכם, לתקן אותו או למחוק אותו. פנו אלינו ונטפל בבקשה.</p>
+
+        <h3>שינויים במדיניות</h3>
+        <p>נוכל לעדכן מדיניות זו מעת לעת. הנוסח העדכני יופיע כאן, עם תאריך העדכון.</p>
+
+        <h3>יצירת קשר</h3>
+        <p>לשאלות ולבקשות בנושא פרטיות: וואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או מייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>.</p>
+      </article>
+
+    <article class="legal-doc" id="legal-doc-terms">
+        <div class="faq-overlay-head">
+          <h2>תנאי שימוש</h2>
+        </div>
+        <p class="legal-updated">עודכן לאחרונה: 01.10.2026</p>
+        <p class="legal-summary">העמוד הזה מודה למשתתפי אירוע ל"ג בעומר השנתי של שכבה ח' ביישוב ומאפשר לשלוח משוב. הוא מופעל ביוזמה קהילתית פרטית על ידי אורייה ליכטנברג. השימוש בו מהווה הסכמה לתנאים האלה.</p>
+
+        <h3>על העמוד</h3>
+        <p>האירוע הסתיים, וההרשמה והתשלום אליו נסגרו. פרטים על אירועים עתידיים, אם יתקיימו, יפורסמו באתר ובקבוצות השכבה וההורים. בנושאי תשלום או החזרים הקשורים לאירוע שהסתיים אפשר לפנות אלינו.</p>
+
+        <h3>משוב</h3>
+        <ul>
+          <li>מסירת משוב היא וולונטרית, והטופס פתוח לכולם.</li>
+          <li>נשמח לכנות, כולל ביקורת. נבקש לא לכתוב שמות או פרטים מזהים של ילדים או של אנשים אחרים.</li>
+          <li>שליחת משוב מהווה הסכמה שנשתמש בו כדי לשפר את האירוע. לא נפרסם אותו בשמכם, וייתכן שלא נגיב לכל משוב.</li>
+        </ul>
+
+        <h3>שימוש הוגן באתר</h3>
+        <p>נא להשתמש בטופס המשוב בהגינות, לא לשלוח ספאם או תוכן פוגעני, ולא לנסות לשבש את פעילות האתר.</p>
+
+        <h3>תכני האתר</h3>
+        <p>האתר, עיצובו, קוד המקור והתכנים בו הם קניינו של אורייה ליכטנברג © 2026, כל הזכויות שמורות. אין להעתיק, לשכפל או להפיץ את האתר, את עיצובו, קוד המקור או הנוסחים שבו, ואין לעשות בהם שימוש מסחרי, ללא אישור מראש ובכתב. הקישור לעמוד מיועד לקהילת האירוע, ונבקש לא להפיץ אותו מעבר לכך.</p>
+
+        <h3>קישורים ושירותים חיצוניים</h3>
+        <p>העמוד מפנה לשירותים של צד שלישי, כמו וואטסאפ ודואר אלקטרוני. טופס המשוב נשלח דרך שירות Web3Forms, והאתר מאוחסן ב-GitHub Pages. השירותים האלה אינם באחריותנו והם כפופים לתנאים ולמדיניות הפרטיות שלהם.</p>
+
+        <h3>נגישות</h3>
+        <p>השקענו בהנגשת האתר, עם הגדרות תצוגה, הקראת הדף ועוד. נתקלתם בקושי? כתבו לנו ונטפל בכך.</p>
+
+        <h3>הגבלת אחריות</h3>
+        <p>האתר והמידע בו מסופקים כפי שהם. איננו אחראים לתקלות טכניות או להפסקות זמניות בשירות, כולל תקלות בשירותי צד שלישי שהאתר נשען עליהם.</p>
+
+        <h3>שינויים ודין חל</h3>
+        <p>נוכל לעדכן את התנאים מעת לעת. הנוסח העדכני יופיע כאן, עם תאריך העדכון. על תנאים אלה חל הדין הישראלי.</p>
+
+        <h3>יצירת קשר</h3>
+        <p>וואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או מייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>. מידע על איסוף ושימוש בפרטים אישיים מופיע ב<a href="#privacy-policy" data-legal-open="privacy-policy">מדיניות הפרטיות</a>.</p>
+      </article>
+
+    <article class="legal-doc" id="legal-doc-accessibility">
+        <div class="faq-overlay-head">
+          <h2>הצהרת נגישות</h2>
+        </div>
+        <p class="legal-updated">עודכן לאחרונה: 01.10.2026</p>
+
+        <h3>המחויבות שלנו</h3>
+        <p>עמוד התודה של אירוע ל"ג בעומר מופעל על ידי אורייה ליכטנברג. אנחנו רוצים שהוא יהיה שמיש ונוח לכמה שיותר אנשים, כולל אנשים עם מוגבלות, ועושים מאמץ סביר להתאים אותו לצרכים שונים.</p>
+
+        <h3>איך אפשר להתאים את העמוד</h3>
+        <p>בתפריט הנגישות (האייקון בראש הדף) אפשר:</p>
+        <ul>
+          <li>להגדיל ולהקטין את הטקסט.</li>
+          <li>להפעיל ניגודיות גבוהה, ריווח שורות מוגדל והדגשת קישורים.</li>
+          <li>לעבור לגופן ידידותי לדיסלקציה.</li>
+          <li>לעצור אנימציות, ולהציג את העמוד בגווני אפור.</li>
+          <li>לבחור מצב תצוגה: לילה, יום או אוטומטי לפי שעות היום.</li>
+          <li>להפעיל הקראה של הדף, בקול של המכשיר.</li>
+        </ul>
+        <p>ההגדרות נשמרות רק בדפדפן שלכם, ואינן נשלחות אלינו.</p>
+
+        <h3>מה עוד עשינו</h3>
+        <ul>
+          <li>העמוד מותאם לטלפון ולמחשב, ולכיוון קריאה מימין לשמאל.</li>
+          <li>אפשר לנווט בו עם מקלדת, ויש קישור דילוג לתוכן הראשי.</li>
+          <li>בנינו אותו כך שיתמוך בקוראי מסך: מבנה כותרות, תוויות לשדות ולכפתורים.</li>
+          <li>בטופס המשוב לכל שדה יש תווית, ואת הדירוג בכוכבים אפשר לבחור גם עם מקלדת.</li>
+          <li>העמוד מכבד את הגדרת המכשיר להפחתת תנועה.</li>
+        </ul>
+
+        <h3>תקן ומגבלות</h3>
+        <p>אנחנו שואפים לעמוד בתקן הישראלי לנגישות אתרי אינטרנט (ת"י 5568) ובהנחיות WCAG ברמת AA. העמוד לא נבדק על ידי מומחה נגישות. בדקנו אותו בכלי בדיקה אוטומטיים ובבדיקות ידניות בלבד, ולכן ייתכן שנשארו בו בעיות.</p>
+        <p>מגבלות שאנחנו מכירים:</p>
+        <ul>
+          <li>ההקראה נשענת על קול המכשיר, ובחלק מהמכשירים אין קול בעברית או שאיכותו נמוכה.</li>
+          <li>שירותים חיצוניים שאליהם העמוד מפנה או נשען עליהם, כמו וואטסאפ, שירות שליחת הטפסים ושירות האחסון, אינם בשליטתנו, ונגישותם אינה באחריותנו.</li>
+        </ul>
+
+        <h3>נתקלתם בבעיה? פנו אלינו</h3>
+        <p>רכז הנגישות: אורייה ליכטנברג. אפשר לפנות בוואטסאפ <a href="https://wa.me/972526305564" target="_blank" rel="noopener">052-6305564</a> או במייל <a href="mailto:oriyalic10@gmail.com">oriyalic10@gmail.com</a>, ונשתדל לטפל בפנייה בהקדם האפשרי. כדאי לציין באיזה עמוד ובאיזה מכשיר או דפדפן הייתה הבעיה.</p>
+      </article>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var overlay = document.getElementById('legal-overlay');
+    var closeBtn = document.getElementById('legal-overlay-close');
+    var docs = {
+      'privacy-policy': document.getElementById('legal-doc-privacy'),
+      'terms-of-use': document.getElementById('legal-doc-terms'),
+      'accessibility-statement': document.getElementById('legal-doc-accessibility')
+    };
+    var tabs = overlay.querySelectorAll('.legal-tab');
+    var lastFocused = null, prevOverflow = '';
+
+    function show(which){
+      Object.keys(docs).forEach(function(k){ docs[k].classList.toggle('show', k === which); });
+      for(var i = 0; i < tabs.length; i++){
+        tabs[i].setAttribute('aria-pressed', tabs[i].getAttribute('data-legal-tab') === which ? 'true' : 'false');
+      }
+      overlay.scrollTop = 0;
+    }
+    function open(which){
+      if(!docs[which]){ return; }
+      if(!overlay.classList.contains('open')){
+        lastFocused = document.activeElement;
+        prevOverflow = document.body.style.overflow;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+      show(which);
+      try{ history.replaceState(null, '', '#' + which); }catch(e){}
+    }
+    function close(){
+      overlay.classList.remove('open');
+      document.body.style.overflow = prevOverflow;
+      try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
+      if(lastFocused && lastFocused.focus){ lastFocused.focus(); }
+    }
+    document.addEventListener('click', function(e){
+      var trigger = e.target.closest ? e.target.closest('[data-legal-open]') : null;
+      if(!trigger){ return; }
+      e.preventDefault();
+      var menuEl = document.getElementById('a11y-menu');
+      if(menuEl && menuEl.contains(trigger)){ menuEl.classList.remove('open'); var mb = document.getElementById('a11y-btn'); if(mb){ mb.setAttribute('aria-expanded', 'false'); } }
+      open(trigger.getAttribute('data-legal-open'));
+    });
+    for(var i = 0; i < tabs.length; i++){
+      tabs[i].addEventListener('click', function(){ open(this.getAttribute('data-legal-tab')); });
+    }
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('open')){ e.stopImmediatePropagation(); close(); }
+    });
+    window.addEventListener('hashchange', function(){
+      var key = location.hash.replace('#', '');
+      if(docs[key]){ open(key); }
+    });
+    var initial = location.hash.replace('#', '');
+    if(docs[initial]){ open(initial); }
   })();
 </script>
 </body>
